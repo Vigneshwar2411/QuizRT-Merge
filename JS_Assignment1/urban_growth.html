@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Urban Population Growth</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+<script src="http://d3js.org/d3.v2.js"></script>
+<script src="d3script.js"></script>
+<script>
+//urban_growth.json
+var request = new XMLHttpRequest();
+request.open("GET", "urban_growth.json", false);
+request.send(null);
+var jsonAreaPoints = JSON.parse(request.responseText);
+urban_growth(jsonAreaPoints);
+</script>
+</body>
+</html>

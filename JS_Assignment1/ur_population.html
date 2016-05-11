@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Urban/Rural Population</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+<script src="http://d3js.org/d3.v2.js"></script>
+<script src="d3script.js"></script>
+<script>
+//ur_population.json
+var request = new XMLHttpRequest();
+request.open("GET", "ur_population.json", false);
+request.send(null);
+var jsonPoints = JSON.parse(request.responseText);
+var urbanPoints = [];
+var ruralPoints = [];
+for(var i=0;i<jsonPoints.length;i++) {
+  if(jsonPoints[i].IndicatorCode=="SP.RUR.TOTL.ZS") {
+    ruralPoints.push(jsonPoints[i]);
+  } else {
+    urbanPoints.push(jsonPoints[i]);
+  }
+}
+ur_population(urbanPoints, ruralPoints);
+</script>
+</body>
+</html>
