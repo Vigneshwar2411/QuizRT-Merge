@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Theft Chart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="http://d3js.org/d3.v2.js"></script>
+<script src="d3script.js"></script>
+<script>
+//stack_bar.json
+
+var request = new XMLHttpRequest();
+request.open("GET", "stack_bar.json", false);
+request.send(null);
+var jsonRects = JSON.parse(request.responseText);
+
+stackBar(jsonRects);
+</script>
+</body>
+</html>

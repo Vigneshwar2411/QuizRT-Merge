@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assault: Multiseries Line Chart</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+<script src="http://d3js.org/d3.v2.js"></script>
+<script src="d3script.js"></script>
+<script>
+//line.json
+var request = new XMLHttpRequest();
+request.open("GET", "line.json", false);
+request.send(null);
+var jsonPoints = JSON.parse(request.responseText);
+var line1 = [], line2 = [];
+for(var i=0;i<jsonPoints.length; i++) {
+  var obj = jsonPoints[i];
+  if(obj.Arrest=="true") {
+    line1.push(obj);
+  } else {
+    line2.push(obj);
+  }
+}
+line(line1, line2, jsonPoints);
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crime Chart for 2015</title>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="http://d3js.org/d3.v2.js"></script>
+  <script src="d3script.js"></script>
+  <script>
+  //pie.json
+  var request = new XMLHttpRequest();
+  request.open("GET", "pie.json", false);
+  request.send(null);
+  var jsonPoints = JSON.parse(request.responseText);
+  pie(jsonPoints);
+  </script>
+</body>
+</html>
