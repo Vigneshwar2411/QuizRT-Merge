@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo</title>
+  <style>
+    .ancestors * {
+      display: block;
+      border: 2px solid lightgrey;
+      color: lightgrey;
+      padding: 5px;
+      margin: 15px;
+    }
+    .css-box-model {
+        background-color: yellow;
+        width: 600px;
+        height: 300px;
+        padding: 25px;
+        border: 25px solid red;
+        margin: 25px;
+    }
+  </style>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="div1">
+    <p>:first-child</p>
+    <h6>:first-of-type</h6>
+    <h5>:last-of-type</h5>
+    <p>:last-child</p>
+    <ul>
+      <li>1</li>
+      <li>nth-child(2)</li>
+      <li>3</li>
+      <li>nth-last-child(1)</li>
+    </ul>
+  </div>
+  <div class="div2">
+    <h1>only-child & only-of-type()</h1>
+  </div>
+
+  <div class="div4">
+    <button class="btn btn-primary" type="button" name="button" id="fadeToggle">Fade Toggle</button><br>
+    <img src="naruto.jpg" alt="naruto" id="fade" height="400px" width="600px"/>
+  </div>
+  <br>
+  <div class="div4">
+    <button class="btn btn-primary" type="button" name="button" id="slideToggle">Slide Toggle</button><br>
+    <img src="naruto.jpg" alt="naruto" id="slide" height="400px" width="600px"/>
+  </div>
+
+  <div class="div3">
+    <div class="btn-group btn-group-sm">
+      <button class="btn btn-primary" type="button" name="button" id="b1">height</button>
+      <button class="btn btn-primary" type="button" name="button" id="b2">width</button>
+      <button class="btn btn-primary" type="button" name="button" id="b3">innerHeight</button>
+      <button class="btn btn-primary" type="button" name="button" id="b4">innerWidth</button>
+      <button class="btn btn-primary" type="button" name="button" id="b5">outerHeight</button>
+      <button class="btn btn-primary" type="button" name="button" id="b6">outerWidth</button>
+    </div>
+    <p>Height="300px", Width="300px", padding, border & margin each side = "25px"</p>
+    <p id="test">Click button to see result for this div</p>
+  </div>
+
+  <div class="div3">
+    <div class="btn-group btn-group-sm">
+      <button class="btn btn-primary" type="button" name="button" id="empty">Empty text</button>
+      <button class="btn btn-primary" type="button" name="button" id="after">after</button>
+      <button class="btn btn-primary" type="button" name="button" id="before">before</button>
+      <button class="btn btn-primary" type="button" name="button" id="add">add</button>
+    </div>
+    <div class="div3sub">
+      <p id="sub">Some text</p>
+    </div>
+  </div>
+
+  <div class="ancestors">
+    <div style="width:500px;">div (great-grandparent)
+      <ul>ul (grandparent)
+        <li>li (direct parent)
+          <span>span</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      var indx = 0, indx1 = 0, imgArr = ['naruto.jpg', 'onepiece.jpg', 'fairy_tail.jpg'];
+      $("div.div1 p:first-child").css({"background-color": "yellow"});
+      $("div.div1 h6:first-of-type").css({"background-color": "red"});
+      $("div.div1 h5:last-of-type").css({"background-color": "orange"});
+      $("div.div1 p:last-child").css({"background-color": "green"});
+
+      $("ul li:nth-child(2)").css({"background-color": "grey"});
+      $("div.div1 ul li:nth-last-child(1)").css({"background-color": "blue"});
+
+      $("div.div2 h1:only-child").css({"background-color": "indigo", "color": "white"});
+      $("div.div2 h1:only-of-type()").css("font-family", "Impact,Charcoal,sans-serif");
+      $("div.div3").addClass("css-box-model");
+      $("#b1").click(function(){
+        $("#test").text("Height="+$("div.div3").height()+"px");
+      });
+      $("#b2").click(function(){
+        $("#test").text("Width="+$("div.div3").width()+"px");
+      });
+      $("#b3").click(function(){
+        $("#test").text("innerHeight="+$("div.div3").innerHeight()+"px");
+      });
+      $("#b4").click(function(){
+        $("#test").text("innerWidth="+$("div.div3").innerWidth()+"px");
+      });
+      $("#b5").click(function(){
+        $("#test").text("outerHeight="+$("div.div3").outerHeight()+"px");
+      });
+      $("#b6").click(function(){
+        $("#test").text("outerWidth="+$("div.div3").outerWidth()+"px");
+      });
+
+      $("#empty").click(function(){
+        $(".div3sub").empty();
+      });
+
+      $("#add").click(function(){
+        var text = $(".div3sub").text();
+        if(text.length == 0) {
+          $(".div3sub").html('<p id="sub">Some text</p>');
+        } else{
+          alert("already text is there");
+        }
+      });
+
+      $("#after").click(function(){
+        var text = $(".div3sub").text();
+        if(text.length == 0) {
+          alert("No text, so adding some");
+          $(".div3sub").html('<p id="sub">Some text</p>');
+        } else {
+          $("#sub").after("Some text after");
+        }
+      });
+
+      $("#before").click(function(){
+        var text = $(".div3sub").text();
+        if(text.length == 0) {
+          alert("No text, so adding some");
+          $(".div3sub").html('<p id="sub">Some text</p>');
+        } else {
+          $("#sub").before("Some text before");
+        }
+      });
+
+      $("#fadeToggle").click(function(){
+        $("#fade").fadeToggle("slow");
+        indx++;
+        if(indx%2==0) {
+          $("#fade").attr("src", imgArr[(indx/2)%3]);
+        }
+      });
+
+      $("#slideToggle").click(function(){
+        $("#slide").slideToggle("slow");
+        indx1++;
+        if(indx1%2==0) {
+          $("#slide").attr("src", imgArr[(indx1/2)%3]);
+        }
+      });
+
+      $("span").parents("ul").css({"color": "red", "border": "2px solid red"});
+
+    });
+  </script>
+</body>
+</html>
