@@ -1,0 +1,71 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'install', '-g', 'babel' ]
+2 info using npm@3.8.6
+3 info using node@v5.11.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readGlobalPackageData
+7 silly fetchPackageMetaData babel
+8 silly fetchNamedPackageData babel
+9 silly mapToRegistry name babel
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry http://172.23.238.253:4873/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'babel',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   name: 'babel',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri http://172.23.238.253:4873/babel
+14 verbose request uri http://172.23.238.253:4873/babel
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 5:23:40 AM
+17 verbose request id 28fa611cff0ce6b5
+18 http request GET http://172.23.238.253:4873/babel
+19 info retry will retry, error on last attempt: Error: connect ECONNREFUSED 172.23.238.253:4873
+20 info attempt registry request try #2 at 5:23:51 AM
+21 http request GET http://172.23.238.253:4873/babel
+22 info retry will retry, error on last attempt: Error: connect ECONNREFUSED 172.23.238.253:4873
+23 info attempt registry request try #3 at 5:24:52 AM
+24 http request GET http://172.23.238.253:4873/babel
+25 silly fetchPackageMetaData Error: connect ECONNREFUSED 172.23.238.253:4873
+25 silly fetchPackageMetaData     at Object.exports._errnoException (util.js:893:11)
+25 silly fetchPackageMetaData     at exports._exceptionWithHostPort (util.js:916:20)
+25 silly fetchPackageMetaData     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1075:14)
+25 silly fetchPackageMetaData  error for babel { [Error: connect ECONNREFUSED 172.23.238.253:4873]
+25 silly fetchPackageMetaData   code: 'ECONNREFUSED',
+25 silly fetchPackageMetaData   errno: 'ECONNREFUSED',
+25 silly fetchPackageMetaData   syscall: 'connect',
+25 silly fetchPackageMetaData   address: '172.23.238.253',
+25 silly fetchPackageMetaData   port: 4873 }
+26 silly rollbackFailedOptional Starting
+27 silly rollbackFailedOptional Finishing
+28 silly runTopLevelLifecycles Starting
+29 silly runTopLevelLifecycles Finishing
+30 silly install printInstalled
+31 verbose stack Error: connect ECONNREFUSED 172.23.238.253:4873
+31 verbose stack     at Object.exports._errnoException (util.js:893:11)
+31 verbose stack     at exports._exceptionWithHostPort (util.js:916:20)
+31 verbose stack     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1075:14)
+32 verbose cwd /vagrant
+33 error Linux 4.2.0-22-generic
+34 error argv "/usr/bin/nodejs" "/usr/bin/npm" "install" "-g" "babel"
+35 error node v5.11.0
+36 error npm  v3.8.6
+37 error code ECONNREFUSED
+38 error errno ECONNREFUSED
+39 error syscall connect
+40 error Error: connect ECONNREFUSED 172.23.238.253:4873
+40 error     at Object.exports._errnoException (util.js:893:11)
+40 error     at exports._exceptionWithHostPort (util.js:916:20)
+40 error     at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1075:14)
+40 error  { [Error: connect ECONNREFUSED 172.23.238.253:4873]
+40 error   code: 'ECONNREFUSED',
+40 error   errno: 'ECONNREFUSED',
+40 error   syscall: 'connect',
+40 error   address: '172.23.238.253',
+40 error   port: 4873 }
+41 error If you are behind a proxy, please make sure that the
+41 error 'proxy' config is set properly.  See: 'npm help config'
+42 verbose exit [ 1, true ]
