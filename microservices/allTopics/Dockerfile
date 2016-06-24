@@ -1,5 +1,5 @@
 #Pull the latest node image
-FROM boilerplate/base-image
+FROM quizrtsocial/base-image
 
  # Create app directory
 

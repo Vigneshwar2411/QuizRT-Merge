@@ -13,6 +13,8 @@ import DashboardView from './views/DashboardView';
 import ChangePasswordView from './views/MyAccount/ChangePasswordView';
 import Topics from './views/allTopics/allTopics';
 import Tournaments from './views/allTournaments/alltournaments';
+import EachTopicsPage from './views/EachTopicsPage';
+import Quiz from './views/QuizPlay';
 
 const verifyLogin = function(nextState, replace) {
   if(!localStorage.token) {
@@ -42,6 +44,8 @@ ReactDOM.render(
       <Route path="/" component={DashboardView} onEnter={verifyLogin} />
       <Route path="/topics" component={Topics} onEnter={verifyLogin} />
       <Route path="/tournaments" component={Tournaments} onEnter={verifyLogin} />
+      <Route path="/eachTopic" component={EachTopicsPage} onEnter={verifyLogin} />
+      <Route path="/quiz" component={Quiz} />
       <Route path="my-account/change-password" component={ChangePasswordView} onEnter={verifyLogin} />
     </Router>
   </MuiThemeProvider>

@@ -1,6 +1,5 @@
 #Pull the latest node image
-FROM boilerplate/base-image
-
+FROM quizrtsocial/base-image
 
 # Create app directory
 RUN mkdir -p /usr/src/my-fav

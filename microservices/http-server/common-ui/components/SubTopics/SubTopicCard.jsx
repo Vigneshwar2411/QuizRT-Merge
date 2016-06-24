@@ -113,6 +113,14 @@ componentDidMount:function(){
     })
   },
 
+  handleDetails:function(tId){
+    Cookie.save("topicId",tId);
+    console.log('');
+    this.context.router.push({
+      pathname:'/eachTopic'
+    })
+  },
+
   handleOnCheck: function(topicId) {
     console.log(">>>>>>>>...handleOnCheck");
     this.state.incre=-this.state.incre;
@@ -154,12 +162,12 @@ componentDidMount:function(){
      }>
       <img src={this.props.topic.topicIcon} />
     </CardMedia>
-    <CardActions >
-      <div className="col-md-4 col-xs-4 col-lg-4 col-sm-4">
+    <CardActions className="row">
+      <div className="col-md-3 col-xs-3 col-lg-3 col-sm-3">
         <RaisedButton label="Play" secondary={true} style={BtnStyle} onClick={this.handleClike.bind(this,this.props.topic._id)} />
-        </div>
-        <div className="col-md-8 col-xs-8 col-lg-8 col-sm-8">
-        <RaisedButton label="Topic details" secondary={true} style={BtnStyle} onClick={this.handleClike.bind(this,this.props.topic._id)} />
+      </div>
+      <div className="col-md-8 col-xs-8 col-lg-8 col-sm-8">
+        
       </div>
      </CardActions>
 

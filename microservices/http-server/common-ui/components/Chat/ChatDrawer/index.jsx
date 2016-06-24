@@ -46,7 +46,7 @@ export default class ChatDrawer extends React.Component{
       height: '100vh',
       transition: '0.3s',
       zIndex:2,
-      backgroundColor:'#3aaf85',
+      backgroundColor:'white',
       position: 'fixed',
       top:0,
       right:0,

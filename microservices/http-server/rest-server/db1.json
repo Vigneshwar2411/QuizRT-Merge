@@ -34,7 +34,7 @@
   "groups": [
     {
       "groupname": "Welcome",
-      "users": "[\"Vigneshwar\",\"Ram\"]",
+      "users": "[\"Ram\"]",
       "id": 6
     },
     {
@@ -58,9 +58,14 @@
       "id": 9
     },
     {
-      "groupname": "test30",
+      "groupname": "Test",
       "users": "[\"Vigneshwar\",\"Sandeep\"]",
       "id": 10
+    },
+    {
+      "groupname": "Test5",
+      "users": "[\"Sandeep\"]",
+      "id": 11
     }
   ]
 }

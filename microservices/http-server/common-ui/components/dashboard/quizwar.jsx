@@ -36,8 +36,7 @@ var QuizWar=React.createClass({
                   <img src="img/quizwar/quizwar.jpg" />
                 </CardMedia>
                   <CardTitle title="Quiz Of The Day" subtitle="There's no charge for the AWESOMENESS, Play & Earn the reward of looking awesome."/>
-                    <RaisedButton label="Play" secondary={true} style={style_btn}
-                      onTouchTap={this.handleQuizwarTouch.bind(this)}/>
+                    <RaisedButton label="Play" secondary={true} style={style_btn} onTouchTap={this.handleQuizwarTouch.bind(this)}/>
               </Card>
             </Paper>
           </div>

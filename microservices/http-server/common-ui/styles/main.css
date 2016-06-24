@@ -19,3 +19,14 @@ h1 {
 ::-moz-scrollbar {
     display: none;
 }
+
+
+input:-webkit-autofill {
+  background-color: #FAFFBD !important;
+  background-image:none !important;
+  color: #000000 !important;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
