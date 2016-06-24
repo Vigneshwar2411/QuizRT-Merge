@@ -1,0 +1,21 @@
+body {
+  font-family: 'Roboto';
+  margin: 0;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+
+#content{
+  overflow-x:hidden;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-moz-scrollbar {
+    display: none;
+}
