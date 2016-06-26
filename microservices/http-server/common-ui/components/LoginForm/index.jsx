@@ -9,7 +9,7 @@ import restUrl from '../../restUrl';
 
 const styles = {
   width:'100%',
-  paddingTop : 50
+  marginTop : 50
 }
 
 export default class LoginForm extends React.Component {
@@ -84,6 +84,7 @@ export default class LoginForm extends React.Component {
     ];
 
     return (
+
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleLogin.bind(this)}>
@@ -106,17 +107,20 @@ export default class LoginForm extends React.Component {
             label="Login"
             primary={true}
             style={{width: '100%', marginTop: '25px'}} />
+          <Link to ='/SignUP'>
+            <RaisedButton label = "Sign Up" secondary = {true} style = {styles}/><br/><br/>
+          </Link>
         </form>
-        <Link to ='/SignUP'>
-          <RaisedButton label = "Sign Up" secondary = {true} style = {styles}/><br/><br/>
-        </Link>
+
+
+
         <Dialog
           open={this.state.openFailDialog}
           actions={actions}
           onRequestClose={this.closeFailDialog.bind(this)}>
           The Username and Password entered do not match with any of our records. Please try again.
         </Dialog>
-      </div>
+        </div>
     );
   }
 }

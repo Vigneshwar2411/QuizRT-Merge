@@ -83,10 +83,7 @@ export default class SignUPComponent extends React.Component{
     let signedUp = <div style={{color: '#0F0',fontSize : 'medium'}}>User Successfully Signed up</div>;
     return (
       <div>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-lg-4 col-xs-12 col-sm-6 col-md-6 col-lg-offset-4 col-sm-offset-3 col-md-offset-3'>
-            <h1 style={text}>QuizRT</h1><br/>
+        <h1 style={text}>QuizRT</h1><br/>
             <p style={text}>Sign-Up to continue with QuizRT</p>
             <form onSubmit={this.handleSubmit.bind(this)} id='signup' >
                   <TextField hintText="abc@def.com" floatingLabelText="Email" fullWidth={true} onChange={this.usernameChanged.bind(this)} type="email" />
@@ -105,9 +102,7 @@ export default class SignUPComponent extends React.Component{
             <Link to = '/login' >
               <RaisedButton label="Login" style={style} />
             </Link>
-            </div>
-          </div>
-        </div>
+            
       </div>
 
     );
