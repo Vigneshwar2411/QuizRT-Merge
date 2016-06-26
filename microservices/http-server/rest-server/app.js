@@ -48,6 +48,36 @@ app.get('/topics',function(req,res) {
   console.log('send');
 });
 
+
+app.post('/api/signup',function(req,res){
+  console.log("inside /api/signup");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    var data = {
+      username : req.body.name,
+      password : req.body.password
+    }
+    console.log(data);
+      mesh.act('role:authentication,cmd:create',data,function(err,response){
+        if(err) { return res.status(500).json(err); }
+        if(response.response==='success'){
+
+          res.json({
+            success: true
+          })
+        }
+        else {
+          res.json({
+            message : 'User Already Exists',
+            success : false
+          })
+        }
+      })
+    });
+
+
+
+
 app.get('/topics/myfav',function(req,res) {
  mesh.act('role:myFav,action:retrive',{user:req.params.uid},function(err,result){
  if (err) return console.error(err)

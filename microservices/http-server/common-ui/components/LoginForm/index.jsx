@@ -3,8 +3,14 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-
+import {Link} from 'react-router';
 import restUrl from '../../restUrl';
+
+
+const styles = {
+  width:'100%',
+  paddingTop : 50
+}
 
 export default class LoginForm extends React.Component {
   constructor() {
@@ -101,6 +107,9 @@ export default class LoginForm extends React.Component {
             primary={true}
             style={{width: '100%', marginTop: '25px'}} />
         </form>
+        <Link to ='/SignUP'>
+          <RaisedButton label = "Sign Up" secondary = {true} style = {styles}/><br/><br/>
+        </Link>
         <Dialog
           open={this.state.openFailDialog}
           actions={actions}
