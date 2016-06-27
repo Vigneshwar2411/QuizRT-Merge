@@ -51,8 +51,8 @@ app.get('/topics',function(req,res) {
 
 app.post('/api/signup',function(req,res){
   console.log("inside /api/signup");
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     var data = {
       username : req.body.name,
       password : req.body.password

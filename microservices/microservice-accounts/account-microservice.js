@@ -1,3 +1,4 @@
+
 var seneca = require('seneca');
 
 var accountMicroservice = seneca();
