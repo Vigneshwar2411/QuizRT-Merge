@@ -103,8 +103,8 @@ export default class Rank extends React.Component{
 
       console.log('\n\n===========Cookie says username as: '+cookie.load('username'));
 
-        this.context.socket = io( );
-   var that = this;
+        this.context.socket = io();
+        var that = this;
         this.context.socket.on('newQuestion',function(data){
 
           console.log('\n User name from cookie is: '+cookie.load('username'));

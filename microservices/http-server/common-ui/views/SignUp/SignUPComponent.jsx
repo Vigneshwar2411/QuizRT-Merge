@@ -52,12 +52,12 @@ export default class SignUPComponent extends React.Component{
               name : username,
               password : pass
             }
-            console.log(data);
+            console.log("Inside Client",data);
             $.ajax({
               type : 'POST',
               data :  JSON.stringify(data),
               contentType : 'application/json',
-              url : restUrl + '/api/signup',
+              url : restUrl + '/api/v1/signup',
               success: (function(data) {
                 console.log("inside signup ajax call");
                 if(data['success'] == false){
@@ -102,7 +102,7 @@ export default class SignUPComponent extends React.Component{
             <Link to = '/login' >
               <RaisedButton label="Login" style={style} />
             </Link>
-            
+
       </div>
 
     );

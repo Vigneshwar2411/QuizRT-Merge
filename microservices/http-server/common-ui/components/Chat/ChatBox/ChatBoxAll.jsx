@@ -20,13 +20,21 @@ const chatListStyle ={
   overflowY:'auto'
 }
 
+var socket = io("/chat");
+
 export default class ChatBoxAll extends React.Component {
   constructor(props) {
     super(props);
     this.state = {messages : [],msg: "" , focusmsg:"" ,roomId:"ChatRoom" };
     //console.log(this.props.UserName);
+  }
 
-
+  componentDidMount(){
+    socket.on('chat message',function(msgserver){
+      console.log(msgserver);
+      var newmsg = this.state.messages.concat([{text : msgserver , id:Date.now()}])
+      this.setState({messages : newmsg});
+    }.bind(this));
   }
 
   handleChat(e){
@@ -35,6 +43,7 @@ export default class ChatBoxAll extends React.Component {
 
   submitForm(e){
     e.preventDefault();
+    socket.emit('chat message', this.state.messages);
     this.setState({msg : ''});
   }
 
