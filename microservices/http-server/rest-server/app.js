@@ -39,15 +39,15 @@ if(env.trim() === 'dev') {
 app.use(require('body-parser').json());
 
 app.use('/api/v1', require('./router'));
-
-var chat = io.of("/chat")
-chat.on('connection', function(socket){
-  console.log("Inside socket.io");
-  socket.on('chat message', function(msg){
-    console.log(msg);
-    chat.emit('chat message', msg);
-  });
-});
+// 
+// var chat = io.of("/chat")
+// chat.on('connection', function(socket){
+//   console.log("Inside socket.io");
+//   socket.on('chat message', function(msg){
+//     console.log(msg);
+//     chat.emit('chat message', msg);
+//   });
+// });
 
 
 

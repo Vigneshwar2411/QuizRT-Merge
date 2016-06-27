@@ -29,13 +29,13 @@ export default class ChatBoxAll extends React.Component {
     //console.log(this.props.UserName);
   }
 
-  componentDidMount(){
-    socket.on('chat message',function(msgserver){
-      console.log(msgserver);
-      var newmsg = this.state.messages.concat([{text : msgserver , id:Date.now()}])
-      this.setState({messages : newmsg});
-    }.bind(this));
-  }
+  // componentDidMount(){
+  //   socket.on('chat message',function(msgserver){
+  //     console.log(msgserver);
+  //     var newmsg = this.state.messages.concat([{text : msgserver , id:Date.now()}])
+  //     this.setState({messages : newmsg});
+  //   }.bind(this));
+  // }
 
   handleChat(e){
     this.setState({msg: e.target.value});
@@ -43,7 +43,7 @@ export default class ChatBoxAll extends React.Component {
 
   submitForm(e){
     e.preventDefault();
-    socket.emit('chat message', this.state.messages);
+    // socket.emit('chat message', this.state.messages);
     this.setState({msg : ''});
   }
 
