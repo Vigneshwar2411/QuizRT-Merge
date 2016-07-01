@@ -6,12 +6,6 @@ import Dialog from 'material-ui/Dialog';
 import {Link} from 'react-router';
 import restUrl from '../../restUrl';
 
-
-const styles = {
-  width:'100%',
-  marginTop : 50
-}
-
 export default class LoginForm extends React.Component {
   constructor() {
     super();
@@ -47,11 +41,13 @@ export default class LoginForm extends React.Component {
     this.setState({loginForm: loginForm});
   }
 
-  handleLogin() {
+  handleLogin(event) {
+    event.preventDefault();
     var loginForm = this.state.loginForm;
     loginForm.attemptedLogin = true;
 
     var data = {username:loginForm.username.value,password:loginForm.password.value};
+    console.log(data.username);
 
     if(!loginForm.username.error && !loginForm.password.error) {
       var request = $.ajax({
@@ -61,6 +57,7 @@ export default class LoginForm extends React.Component {
         contentType: 'application/json'
       });
       request.done(function(data) {
+        console.log("hi");
         localStorage.token = data.token;
         this.context.router.push('/');
       }.bind(this));
@@ -84,7 +81,6 @@ export default class LoginForm extends React.Component {
     ];
 
     return (
-
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleLogin.bind(this)}>
@@ -107,20 +103,17 @@ export default class LoginForm extends React.Component {
             label="Login"
             primary={true}
             style={{width: '100%', marginTop: '25px'}} />
-          <Link to ='/SignUP'>
-            <RaisedButton label = "Sign Up" secondary = {true} style = {styles}/><br/><br/>
-          </Link>
+            <Link to ='/SignUP'>
+              <RaisedButton label = "Sign Up" secondary = {true} /><br/><br/>
+            </Link>
         </form>
-
-
-
         <Dialog
           open={this.state.openFailDialog}
           actions={actions}
           onRequestClose={this.closeFailDialog.bind(this)}>
           The Username and Password entered do not match with any of our records. Please try again.
         </Dialog>
-        </div>
+      </div>
     );
   }
 }

@@ -24,7 +24,7 @@ export default class SignUPComponent extends React.Component{
   constructor(props,context){
     super(props,context);
     this.state = {
-      formInput: { username: '', password: ''}
+      formInput: { username: '', password: '' ,errorText: 'No Error'}
     };
     console.log("Inside SignUPComponent");
   }
@@ -61,6 +61,7 @@ export default class SignUPComponent extends React.Component{
               success: (function(data) {
                 console.log("inside signup ajax call");
                 if(data['success'] == false){
+
                   router.push('/SignUP');
                   // x.setState({$invalid: true});
                 }
@@ -84,9 +85,9 @@ export default class SignUPComponent extends React.Component{
     return (
       <div>
         <h1 style={text}>QuizRT</h1><br/>
-            <p style={text}>Sign-Up to continue with QuizRT</p>
+            <p style={text}>Sign-Up to continue with QuizRT-Social</p>
             <form onSubmit={this.handleSubmit.bind(this)} id='signup' >
-                  <TextField hintText="abc@def.com" floatingLabelText="Email" fullWidth={true} onChange={this.usernameChanged.bind(this)} type="email" />
+                  <TextField hintText="abc@def.com"  floatingLabelText="Email-Id" fullWidth={true} onChange={this.usernameChanged.bind(this)} type="email" />
                   <TextField fullWidth={true}  floatingLabelText="Password" type="password" onChange={this.passwordChanged.bind(this)} />
                   <RaisedButton type="submit" label="Sign Up" primary={true} style={style} />
             </form>
@@ -102,7 +103,7 @@ export default class SignUPComponent extends React.Component{
             <Link to = '/login' >
               <RaisedButton label="Login" style={style} />
             </Link>
-            
+
       </div>
 
     );

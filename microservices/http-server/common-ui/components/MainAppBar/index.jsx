@@ -121,13 +121,14 @@ export default class MainAppBar extends React.Component {
           <List>
             <ListItem primaryText="Home" leftIcon={<ActionHome />}
               onTouchTap={this.goToDashBoard.bind(this)}/>
-            <ListItem primaryText="View Profile" leftIcon={<ActionAccountbox />}
+            <ListItem primaryText="View Profile" leftIcon={<ActionAccountbox />} containerElement={<Link to="/profile" />}
               />
             <ListItem primaryText="Topics" leftIcon={<ActionViewmodule />}
               onTouchTap={this.handleTopics.bind(this)}/>
             <ListItem primaryText="Tournaments" leftIcon={<ActionViewquilt />}
               />
-              <ListItem primaryText="Change Password" leftIcon={<ActionFingerprint />} containerElement={<Link to="/my-account/change-password" />}/>
+            <ListItem primaryText="Change Password" leftIcon={<ActionFingerprint />} containerElement={<Link to="/my-account/change-password" />}
+            />
           </List>
         </Drawer>
         </div>

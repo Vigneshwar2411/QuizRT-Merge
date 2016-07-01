@@ -9,5 +9,13 @@ module.exports = function(){
           })
         // })
     });
+    this.add('role:allTopics,cmd:retrieveById', function(msg, respond) {
+    allTopics.findById(msg.id, function (err, retrievedTopics) {
+      if(err) { return respond(err); }
+      return respond(null, {response: 'success', entity: retrievedTopics});
+    });
   });
+
+  }
+);
 }

@@ -61,7 +61,6 @@ app.post('/api/signup',function(req,res){
       mesh.act('role:authentication,cmd:create',data,function(err,response){
         if(err) { return res.status(500).json(err); }
         if(response.response==='success'){
-
           res.json({
             success: true
           })
@@ -110,6 +109,18 @@ res.send(result);
    })
    console.log('send');
  });
+
+ // app.get('/myprofile',function(req,res) {
+ //   console.log('form express-tournamentSection');
+ //   res.header("Access-Control-Allow-Origin", "*");
+ //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ //   mesh.act('role:myprofile,action:retriveByName',function(err,result){
+ //     if (err) return console.error(err)
+ //   console.log('-----------------'+result+'------------------------')
+ //   res.send(result)
+ //   })
+ //   console.log('send');
+ // });
 
 app.post('/api/check',function(req,res){
  console.log('-------------- abc from express floow---------------');

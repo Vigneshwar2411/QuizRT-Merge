@@ -1,0 +1,20 @@
+{
+   "name": "profile",
+  "version": "0.1.0",
+  "description": "Display profile.",
+  "main": "profilePlugin.js",
+  "scripts": {
+    "start": "node profileService.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Preethi",
+  "license": "ISC",
+  "dependencies": {
+    "seneca": "^2.1.0",
+    "seneca-balance-client": "^0.5.0",
+    "seneca-entity": "^1.0.0",
+    "seneca-mesh": "^0.7.0",
+    "seneca-mongo-store": "^0.2.0"
+  }
+
+}
