@@ -39,18 +39,30 @@ if(env.trim() === 'dev') {
 app.use(require('body-parser').json());
 
 app.use('/api/v1', require('./router'));
-// 
-// var chat = io.of("/chat")
-// chat.on('connection', function(socket){
-//   console.log("Inside socket.io");
-//   socket.on('chat message', function(msg){
-//     console.log(msg);
-//     chat.emit('chat message', msg);
-//   });
-// });
+
+var chat = io.of('/chat')
+chat.on('connection', function(socket) {
+
+  console.log("Inside socket.io");
+  var chatMiddlewareMicroservice = require('seneca')();
+  var flag = false;
+  socket.on('create_room', function(id){
+    // chatmiddleware.use('redis-transport');
+        chatMiddlewareMicroservice.use('chatmiddlewareplugin',{chatroomId:id,socket:socket});
+  });
+  socket.on('chat_message', function(msgToSend){
+    console.log(msgToSend);
+
+      chatMiddlewareMicroservice.act('role:chat,cmd:sendMsg', {msg: msgToSend}, function(err, response) {
+          if(err) { console.error('===== ERR: ', err, ' ====='); return res.status(500).send(); }
+          if(response.response !== 'success') { return res.status(409).send(); }
+          return res.status(201).send();
+          // chat.emit('received_msg', msg);
+            });
 
 
-
+      });
+});
 
 app.get('/topics',function(req,res) {
   console.log('form express-alltopics');
@@ -63,71 +75,6 @@ app.get('/topics',function(req,res) {
   })
   console.log('send');
 });
-
-//
-// app.post('/api/signup',function(req,res){
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
-//   console.log("inside /api/signup");
-//     var data = {
-//       username : req.body.name,
-//       password : req.body.password
-//     }
-//     console.log(data);
-//       mesh.act('role:authentication,cmd:create',data,function(err,response){
-//         if(err) { return res.status(500).json(err); }
-//         if(response.response==='success'){
-//
-//           res.json({
-//             success: true
-//           })
-//         }
-//         else {
-//           res.json({
-//             message : 'User Already Exists',
-//             success : false
-//           })
-//         }
-//       })
-//     });
-
-
-// io.on('connection',function(socket){
-//   middleWareCount++;
-//   console.log('\n =====Middleware count is: '+middleWareCount+'\n');
-//
-//   var playerMiddleWareService =  require('seneca')()
-//    socket.on('playGame',function(msg){
-//
-//      playerMiddleWareService.use('redis-transport');
-//     // console.log('\n Setting up middleware for user \n');
-//     console.log('\n======Initializing plugin for  : '+(msg.username)+'\n');
-//     playerMiddleWareService.use('./gameplayMiddlewarePlugin', {
-//       username:msg.username,
-//       tournamentId:msg.tournamentId,
-//       socket:socket
-//     });
-//   });
-//
-//   socket.on('disconnect',function(){
-//     console.log('\n======Closing service=====\n');
-//     playerMiddleWareService.close();
-//   })
-//
-//  // var serverMessages = ["North of the wall","Casterly Rock","Westeros","Pentos","Bravos","Winterfell","Mereen"]
-//  // var randomSelection = Math.floor(Math.random()*7)
-//
-//
-//   socket.emit('serverId',"This question is coming from "+name);
-//
-//   socket.on('myAnswer',function(socketObj){
-//     console.log('\n==========Answer received by server is: '+socketObj.answer+'\n');
-//      playerMiddleWareService.act('role:user,action:answer',{answer:socketObj.answer},function(err,response){
-//
-//      })
-//   });
-// })
 
 
 app.get('/topics/myfav',function(req,res) {

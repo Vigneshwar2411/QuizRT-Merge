@@ -8,6 +8,8 @@ import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import base64 from 'base-64';
+import restUrl from '../../../restUrl';
 
 const style = {
   paddingTop:40,
@@ -20,7 +22,7 @@ const chatListStyle ={
   overflowY:'auto'
 }
 
-var socket = io("/chat");
+var socket = io.connect(restUrl+'/chat');
 
 export default class ChatBoxAll extends React.Component {
   constructor(props) {
@@ -29,13 +31,17 @@ export default class ChatBoxAll extends React.Component {
     //console.log(this.props.UserName);
   }
 
-  // componentDidMount(){
-  //   socket.on('chat message',function(msgserver){
-  //     console.log(msgserver);
-  //     var newmsg = this.state.messages.concat([{text : msgserver , id:Date.now()}])
-  //     this.setState({messages : newmsg});
-  //   }.bind(this));
-  // }
+  componentDidMount(){
+    var id = {
+      roomId: 'abc'
+              }
+    socket.emit('create_room',id);
+    socket.on('received_msg',function(msgserver){
+      console.log(msgserver);
+      var newmsg = this.state.messages.concat([{text : msgserver}])  //, id:Date.now(
+      this.setState({messages : newmsg});
+    }.bind(this));
+  }
 
   handleChat(e){
     this.setState({msg: e.target.value});
@@ -43,7 +49,8 @@ export default class ChatBoxAll extends React.Component {
 
   submitForm(e){
     e.preventDefault();
-    // socket.emit('chat message', this.state.messages);
+    socket.emit('chat_message', this.state.msg);
+    console.log("Chat message you sent",this.state.msg);
     this.setState({msg : ''});
   }
 

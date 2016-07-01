@@ -126,7 +126,7 @@ export default class ChatBox extends React.Component{
             open={this.state.dialogOpen}
             onRequestClose={this.closeDialog.bind(this)}
             >
-            Are you Sure, You Want Leave this Group?
+            Are you Sure, You Want to Leave this Group?
           </Dialog>
         </div>
       <div style={{height:'100vh'}}>
@@ -168,7 +168,7 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll /> : this.state.view==="groupinfo" ?
+              <ChatBoxAll uid="test"/> : this.state.view==="groupinfo" ?
               <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> :
               this.state.view==="changename"?
               <ChangeGroupName GroupData={this.state.GroupData} close={this.closeChangeGroup.bind(this)}/> : null
