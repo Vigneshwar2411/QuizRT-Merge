@@ -69,6 +69,11 @@ export default class MainAppBar extends React.Component {
     this.context.router.push('/topics');
   }
 
+  handleProfile(e){
+    e.preventDefault();
+    this.context.router.push('/profile');
+  }
+
   goToDashBoard(e){
     e.preventDefault();
     this.context.router.push('/');
@@ -122,7 +127,8 @@ export default class MainAppBar extends React.Component {
             <ListItem primaryText="Home" leftIcon={<ActionHome />}
               onTouchTap={this.goToDashBoard.bind(this)}/>
             <ListItem primaryText="View Profile" leftIcon={<ActionAccountbox />}
-              />
+            onTouchTap={this.handleProfile.bind(this)}
+            />
             <ListItem primaryText="Topics" leftIcon={<ActionViewmodule />}
               onTouchTap={this.handleTopics.bind(this)}/>
             <ListItem primaryText="Tournaments" leftIcon={<ActionViewquilt />}

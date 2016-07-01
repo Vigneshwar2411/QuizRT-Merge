@@ -21,7 +21,7 @@ controller.signup = function(req, res) {
         success : false
       })
     }
-    
+
   });
 };
 
