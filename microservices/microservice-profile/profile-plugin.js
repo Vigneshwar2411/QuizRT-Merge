@@ -46,7 +46,7 @@ exports = module.exports = function(options) {
   });
 
   this.add('role:profile,cmd:getProfile', function(msg, respond) {
-    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
+    return Profile.find({username:"admin"}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', entity: retrievedProfile});
     });

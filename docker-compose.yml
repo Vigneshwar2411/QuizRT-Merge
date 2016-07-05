@@ -50,15 +50,15 @@ services:
         MONGO_URL: 'mongodb://localhost:27017/boilerplate-production'
 
   microservice-friend:
-    container_name: microservice-friend
-    build: microservices/microservice-friend
-    image: boilerplate/friend
-    network_mode: host
-    restart: always
-    depends_on:
-      - microservice-mesh-base
-    environment:
-      MONGO_URL: 'mongodb://localhost:27017/boilerplate-production'
+      container_name: microservice-friend
+      build: microservices/microservice-friend
+      image: boilerplate/friend
+      network_mode: host
+      restart: always
+      depends_on:
+        - microservice-mesh-base
+      environment:
+        MONGO_URL: 'mongodb://localhost:27017/boilerplate-production'
 
   microservice-tournament-section:
     container_name: microservice-tournament-section

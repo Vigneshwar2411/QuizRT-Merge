@@ -126,11 +126,41 @@ export default class Profile extends React.Component{
 
         }
 
+        addFriend(){
+
+              var friendsData = {
+                subject: this.state.Profile.username.value,
+                relation: "sent friend request",
+                object: "Preethi",
+                };
+
+              var request = $.ajax({
+                url: restUrl + '/api/v1/friend',
+                type: 'POST',
+                data: JSON.stringify(friendsData),
+                contentType: 'application/json',
+                headers: {JWT: localStorage.token}
+              });
+              request.done(function(data) {
+                console.log(JSON.stringify(data));
+              }.bind(this));
+              request.fail(function() {
+                this.setState({
+                  error: true
+                  });
+                }.bind(this));
+
+                this.setState({
+                  open:false
+                })
+
+              }
+
   componentDidMount(){
     console.log(this.state.Profile.username.value);
 
     var data1 = {
-      username: this.state.Profile.username.value,
+      username: "admin"
     };
 
     var request = $.ajax({
@@ -169,14 +199,14 @@ export default class Profile extends React.Component{
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
               <div style={{width: '100%', textAlign: 'center'}}>
                 <Avatar size={80} style={{margin: '30px 0 30px'}}
-                 src={this.state.arr.imageLink}
+                 src={this.state.arr[0].imageLink}
                />
               </div>
             </div>
             <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
-              <h2>{this.state.arr.name}</h2>
+              <h2>{this.state.arr[0].name}</h2>
               <h4>Title</h4>
-              <h5>{this.state.arr.age},{this.state.arr.country}</h5>
+              <h5>{this.state.arr[0].age},{this.state.arr[0].country}</h5>
             </div>
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" >
               {
@@ -243,7 +273,7 @@ export default class Profile extends React.Component{
                       primary={true}
                       style={{marginTop: 50}}
                       icon={<FontIcon style={{cursor:'pointer'}} className="muidocs-icon-social-person_add"/>}
-                      onTouchTap={this.addFriend}
+                      onTouchTap={this.addFriend.bind(this)}
                   />
                 )
 
@@ -302,7 +332,7 @@ export default class Profile extends React.Component{
 
         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-lg-offset-1" style={styles}>
         <h4>Games</h4>
-        <h2>{this.state.arr.totalGames}</h2>
+        <h2>{this.state.arr[0].totalGames}</h2>
         </div>
         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" style={style}>
         <h4>Followers</h4>

@@ -167,7 +167,7 @@ componentDidMount:function(){
         <RaisedButton label="Play" secondary={true} style={BtnStyle} onClick={this.handleClike.bind(this,this.props.topic._id)} />
       </div>
       <div className="col-md-8 col-xs-8 col-lg-8 col-sm-8">
-        
+
       </div>
      </CardActions>
 
