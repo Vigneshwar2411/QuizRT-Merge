@@ -18,8 +18,10 @@ import AutoComplete from 'material-ui/AutoComplete';
 import CreateGroupDialog from './CreateGroupDialog';
 import Group from './Group';
 import FriendGroupList from './FriendGroupList';
+import restUrl from '../../../restUrl';
+import base64 from 'base-64';
 
-var user = 'Vigneshwar';
+
 export default class OnlineList extends React.Component{
 
     constructor(props){
@@ -31,46 +33,58 @@ export default class OnlineList extends React.Component{
     }
 
     componentDidMount(){
-
-      var url ="http://localhost:8080/groups?users_like="+this.state.username;
-
-      $.ajax({
-        url: "http://localhost:8080/users",
-        dataType: 'json',
+      console.log("==========Inside did mount=====");
+      // var url ="http://localhost:8080/groups?users_like="+this.state.username;
+      var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
+      username = username.split("@")[0];
+      var request = $.ajax({
+        url: restUrl + '/api/v1/chatlist/users/'+"Vigneshwar",
         type: 'GET',
-        cache: false,
-        success: function(data) {
-          this.setState({OnlineUsers: data});
-          console.log(data);
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error("http://localhost:8080/users", status, err.toString());
-        }.bind(this)
+        contentType: 'application/json',
+        cache: false
       });
+      request.done(function(data){
+        console.log("=====inside success");
+        console.log("====Inside client ",data.data);
+        console.log("====Inside client ",data.data[0]);
+        this.setState({OnlineUsers: data.data});
+      }.bind(this));
+      request.fail(function(){
+          console.log("Inside fail============");
+      }.bind(this));
 
-      $.ajax({
-        url: url,
-        dataType: 'json',
+
+      var request1 = $.ajax({
+        url: restUrl + '/api/v1/chatlist/groups/'+"Vigneshwar",
         type: 'GET',
-        cache: false,
-        success: function(data) {
-          this.setState({GroupData: data});
-        }.bind(this),
-        error: function(xhr, status, err) {
-          console.error(url, status, err.toString());
-        }.bind(this)
+        contentType: 'application/json',
+        cache: false
       });
+      request1.done(function(data){
+        console.log("=====inside success of groups");
+        console.log("====Inside client groups ",data.data);
+        console.log("====Inside client groups",data.data[0]);
+        this.setState({GroupData: data.data});
+      }.bind(this));
+      request1.fail(function(){
+          console.log("Inside request.fail of groups============");
+      }.bind(this));
+
   }
 
     handleTouchTap(name) {
       var temp;
+      var groupflag = false;
       var outerThis=this;
       this.state.GroupData.map(function(g){
         if(g.groupname===name){
             temp = g;
+            groupflag = true;
         }
         console.log("onlinelist"+name);
-        outerThis.props.openChatBox(name,temp,outerThis.state.OnlineUsers);
+        console.log("===groupflag",groupflag);
+        outerThis.props.openChatBox(name,temp,outerThis.state.OnlineUsers,groupflag);
+
       })
     }
 
@@ -95,20 +109,44 @@ export default class OnlineList extends React.Component{
     };
 
     postGroupName(groupInfo){
-      console.log(JSON.stringify(groupInfo));
-      $.ajax({
-        url: "http://localhost:8080/groups",
-        dataType: 'json',
+      var groupDataPost ={
+          groupname:groupInfo.groupname,
+          groupavatar:"http://lorempixel.com/100/100",
+          topicid:Math.ceil(Math.random()*1231),
+          members:groupInfo.users
+      };
+      console.log(JSON.stringify(groupDataPost));
+      console.log(groupDataPost);
+
+      var request2 = $.ajax({
+        url: restUrl + '/api/v1/chatlist/addgroup',
         type: 'POST',
-        data: groupInfo,
-        error: function(xhr, status, err) {
-          console.error("http://localhost:8080/groups", status, err.toString());
-        }.bind(this)
+        contentType: 'application/json',
+        data: JSON.stringify(groupDataPost)
       });
+      request2.done(function(data){
+        console.log("===Inside Onlinelist after posting group ",data);
+        this.setState({GroupData: data.groupdata});
+      }.bind(this));
+      request2.fail(function(){
+          console.log("Inside request.fail of postgroups============");
+      }.bind(this));
+
+      // $.ajax({
+      //   url: "http://localhost:8080/groups",
+      //   dataType: 'json',
+      //   type: 'POST',
+      //   data: groupDataPost,
+      //   error: function(xhr, status, err) {
+      //     console.error("http://localhost:8080/groups", status, err.toString());
+      //   }.bind(this)
+      // });
     }
 
     addGroup(groupname,groupusers){
-      this.postGroupName({"groupname":groupname , "users":JSON.stringify(groupusers)});
+      console.log("++++Inside Online list retrieved new group data ",groupname);
+      console.log("++++Inside Online list retrieved new group data ",groupusers);
+      this.postGroupName({"groupname":groupname , "users":groupusers});
       this.setState({
         groupName : '',view: "List",
       })

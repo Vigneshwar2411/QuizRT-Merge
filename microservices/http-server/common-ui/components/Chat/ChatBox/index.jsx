@@ -20,17 +20,31 @@ export default class ChatBox extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,
+      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: false,
     }
   }
 
   componentDidMount(){
-    this.setState({
-      GroupData : this.props.GroupData,
-      UserData : this.props.UserData,
-      UserArray : JSON.parse(this.props.GroupData.users),
-      titleName : this.props.Name
-    })
+  console.log("====inisde did mount of chat box",this.props.GroupFlag);
+    if(this.props.GroupFlag){
+      this.setState({
+        GroupData : this.props.GroupData,
+        UserData : this.props.UserData,
+        UserArray : JSON.parse(this.props.GroupData.users),
+        titleName : this.props.Name,
+        groupFlag : true
+      })
+    }
+    else{
+      this.setState({
+        GroupData : null,
+        UserData : this.props.UserData,
+        UserArray : null,
+        titleName : this.props.Name,
+        groupFlag : false
+      })
+    }
+
   }
 
   popoverOpen(event) {
@@ -67,25 +81,25 @@ export default class ChatBox extends React.Component{
   }
 
   confirmLeave(){
-    console.log(typeof(this.state.GroupData));
-    var url = "http://localhost:8080/groups/"+this.state.GroupData.id;
-    this.state.UserArray.splice(this.state.UserArray.indexOf(user),1);
-    this.setState({
-      UserArray : this.state.UserArray
-    },function(){
-      console.log(this.state.UserArray);
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        type: 'PUT',
-        data : {groupname : this.state.GroupData.groupname ,
-                users : JSON.stringify(this.state.UserArray),
-                }
-      });
-    })
-    this.setState({
-      dialogOpen : false
-    })
+    // console.log(typeof(this.state.GroupData));
+    // var url = "http://localhost:8080/groups/"+this.state.GroupData.id;
+    // this.state.UserArray.splice(this.state.UserArray.indexOf(user),1);
+    // this.setState({
+    //   UserArray : this.state.UserArray
+    // },function(){
+    //   console.log(this.state.UserArray);
+    //   $.ajax({
+    //     url: url,
+    //     dataType: 'json',
+    //     type: 'PUT',
+    //     data : {groupname : this.state.GroupData.groupname ,
+    //             users : JSON.stringify(this.state.UserArray),
+    //             }
+    //   });
+    // })
+    // this.setState({
+    //   dialogOpen : false
+    // })
   }
 
   changeName(){
@@ -117,6 +131,7 @@ export default class ChatBox extends React.Component{
       />,
     ];
     var outerThis=this;
+    console.log("=====Insisde chatbox check flag ,state of groupflag",this.state.groupFlag);
     return(
       <div>
         <div>
@@ -140,11 +155,8 @@ export default class ChatBox extends React.Component{
                 <h3 style={{textAlign:'center'}}>{this.props.Name}</h3>
               </div>
               <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-              <center style={{margin:19}}>
-                <span style={{cursor:'pointer'}}>
-                  <FontIcon className="muidocs-icon-navigation-more_vert" onTouchTap={this.popoverOpen.bind(this)}/>
-                </span>
-              </center>
+              {this.state.groupFlag?<h2>Hi</h2>:<h2>Not a group</h2>}
+
                 <Popover
                   open={this.state.popoverOpen}
                   anchorEl={this.state.anchorEl}
@@ -168,10 +180,7 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll uid="test"/> : this.state.view==="groupinfo" ?
-              <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> :
-              this.state.view==="changename"?
-              <ChangeGroupName GroupData={this.state.GroupData} close={this.closeChangeGroup.bind(this)}/> : null
+              <ChatBoxAll uid="test"/> :null
           }
 
         </div>
@@ -182,3 +191,9 @@ export default class ChatBox extends React.Component{
 
 
 };
+
+
+// (this.state.view==="groupinfo" && this.state.groupFlag === true) ?
+// <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> :
+// (this.state.view==="changename" && this.state.groupFlag === true)?
+// <ChangeGroupName GroupData={this.state.GroupData} close={this.closeChangeGroup.bind(this)}/> : null

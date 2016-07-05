@@ -48,18 +48,21 @@ chat.on('connection', function(socket) {
   var flag = false;
   socket.on('create_room', function(id){
     // chatmiddleware.use('redis-transport');
-        chatMiddlewareMicroservice.use('chatmiddlewareplugin',{chatroomId:id,socket:socket});
+        chatMiddlewareMicroservice.use('chatmiddlewareplugin',
+        {chatroomId:id,socket:socket,cb:function(res){if (res==='ready') {flag=true}}
+      });
+      console.log(flag);
   });
   socket.on('chat_message', function(msgToSend){
     console.log(msgToSend);
-
+    if(flag){
       chatMiddlewareMicroservice.act('role:chat,cmd:sendMsg', {msg: msgToSend}, function(err, response) {
           if(err) { console.error('===== ERR: ', err, ' ====='); return res.status(500).send(); }
           if(response.response !== 'success') { return res.status(409).send(); }
           return res.status(201).send();
-          // chat.emit('received_msg', msg);
+      // chat.emit('received_msg', msg);
             });
-
+    }
 
       });
 });

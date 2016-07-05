@@ -15,17 +15,18 @@ exports = module.exports = function(options) {
     self.socket.emit('received_msg',msg.msg);
     return respond(null,{response:'success',message:msg.msg});
   })
+
     .listen({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'})
     .ready(function(){
       console.log('=====Setup TX=====');
       tx.use('redis-transport');
       tx.client({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'});
-      // if(options.cb) {
-      //   tx.ready(function()
-      //   {
-      //      options.cb();
-      //   })
-      // }
+      if(options.cb) {
+        tx.ready(function()
+        {
+           options.cb('ready');
+        })
+      }
   });
 
   this.add('role:chat,cmd:sendMsg', function(msg, respond) {

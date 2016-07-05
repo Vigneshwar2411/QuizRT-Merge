@@ -23,6 +23,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import CreateGroupDialog from './CreateGroupDialog';
+import base64 from 'base-64';
 
   const style ={
     margin: 5,
@@ -32,8 +33,10 @@ export default class Group extends React.Component{
 
   constructor(props){
     super(props);
+    var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
+    username = username.split("@")[0];
     this.state=({
-      groupName: "",selectedusers:[],selected:'', users:[]
+      groupName: "",selectedusers:[username],selected:'', users:[]
     })
   }
 
@@ -81,9 +84,11 @@ export default class Group extends React.Component{
   }
   render(){
     var outerThis = this;
+    // console.log("+++Inside Group component UserData ",this.props.data);
     var friends = this.props.data.map(function(data){
-                return(data.Name)
+                return(data.username)
         })
+        console.log("+++Inside Group, Friends for Autocomplete",friends);
 
     return(
       <div>

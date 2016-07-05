@@ -19,9 +19,9 @@ export default class ChatComponent extends React.Component{
     this.state ={view:'OnlineList'}
   }
 
- openChatBox(name,GroupData,UserData) {
+ openChatBox(name,GroupData,UserData,groupFlag) {
    console.log("Chat component"+name);
-   this.setState({user:name , GroupData: GroupData , UserData : UserData ,view:'ChatBox'});
+   this.setState({user:name , GroupData: GroupData , UserData : UserData ,groupFlag:groupFlag,view:'ChatBox'});
  }
  closeChatBox(){
     this.setState({view:'OnlineList'});
@@ -36,7 +36,7 @@ export default class ChatComponent extends React.Component{
         <div>
         {this.state.view=="OnlineList"?<OnlineList closeDrawer={this.closeDrawer.bind(this)} openChatBox={this.openChatBox.bind(this)}/>
         :this.state.view=="ChatBox"?<ChatBox closeChatBox={this.closeChatBox.bind(this)}
-         Name={this.state.user} GroupData={this.state.GroupData} UserData={this.state.UserData}/> : null}
+         Name={this.state.user} GroupData={this.state.GroupData} UserData={this.state.UserData} GroupFlag={this.state.groupFlag}/> : null}
         </div>
     )
   }

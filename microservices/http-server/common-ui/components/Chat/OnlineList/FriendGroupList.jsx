@@ -39,11 +39,11 @@ export default class FriendGroupList extends React.Component{
             <List>
               <Subheader>Friends</Subheader>
                 {this.props.usersData.map(function(data){
-                  return(  <ListItem id = {data.id}
-                    primaryText={data.Name}
-                    leftAvatar={<Avatar src={data.img} />}
+                  return(  <ListItem id = {data._id}
+                    primaryText={data.username}
+                    leftAvatar={<Avatar src={data.useravatar} />}
                     rightIcon={<FontIcon className="muidocs-icon-communication-chat_bubble" />}
-                    onTouchTap={outerThis.props.selectList.bind(outerThis,data.Name)}
+                    onTouchTap={outerThis.props.selectList.bind(outerThis,data.username)}
                     />);
                 })}
                 </List>
@@ -51,9 +51,9 @@ export default class FriendGroupList extends React.Component{
             <List>
               <Subheader>Groups</Subheader>
               {this.props.groupData.map(function(data){
-                return(  <ListItem id = {data.id}
+                return(  <ListItem id = {data._id}
                   primaryText={data.groupname}
-                  leftAvatar={<Avatar src={data.img} />}
+                  leftAvatar={<Avatar src={data.groupavatar} />}
                   rightIcon={<FontIcon className="muidocs-icon-social-group"/>}
                   onTouchTap={outerThis.props.selectList.bind(outerThis,data.groupname)}
                   />);
