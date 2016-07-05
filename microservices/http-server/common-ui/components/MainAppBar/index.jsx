@@ -71,7 +71,7 @@ export default class MainAppBar extends React.Component {
 
   handleProfile(e){
     e.preventDefault();
-    this.context.router.push('/profile');
+    this.context.router.push('/profilePage');
   }
 
   goToDashBoard(e){

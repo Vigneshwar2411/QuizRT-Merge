@@ -19,83 +19,59 @@ exports = module.exports = function(options) {
     });
   });
 
+  function hashPassword(password, callback) {
+    return bcrypt.hash(password, 10, callback);
+  }
 
+  function verifyPassword(password, hash, callback) {
+    return bcrypt.compare(password, hash, callback);
+  }
 
   const Profile = connection.model('Profile', require('./profile.schema'));
 
-  this.add('role:profile,cmd:addFriend', function(msg, respond) {
-    profile_collection.findById(msg.id, function (err, retrievedProfile) {
+
+
+  this.add('role:profile,cmd:create', function(msg, respond) {
+    return Profile.create(msg, function(err, createdProfile) {
+      if(err) { return respond(err); }
+      return respond(null, {response: 'success', entity: createdProfile});
+    });
+  });
+
+  this.add('role:profile,cmd:retrieveById', function(msg, respond) {
+    return Profile.findById(msg.id, function (err, retrievedProfile) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', entity: retrievedProfile});
     });
   });
 
-  this.add('role:profile,cmd:create', function(msg, respond) {
-    return Profile.find({username: msg.username}, function(err, retrievedProfile) {
+  this.add('role:profile,cmd:getProfile', function(msg, respond) {
+    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
-      if(retrievedProfile.length > 0) { return respond(null, {response: 'fail'}); }
-        return Profile.create(msg, function(err, createdProfile) {
-          if(err) { return respond(err); }
-          return respond(null, {response: 'success'});
-        });
+      return respond(null, {response: 'success', entity: retrievedProfile});
     });
   });
 
   this.add('role:profile,cmd:editProfile', function(msg, respond) {
-    console.log('hi');
-    console.log(msg);
-    return Profile.find({username: msg.username}, function(err, retrievedProfile) {
+    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
-      if(retrievedProfile.length === 0) { return respond(null,{response:'fail'}); }
-      // return respond(null, {response: 'success', entity: retrievedProfile});
       else{
-        retrievedProfile[0].name = msg.name;
-        retrievedProfile[0].imageLink = msg.imageLink;
-        retrievedProfile[0].age = msg.age;
-        retrievedProfile[0].country = msg.country;
-
-        retrievedProfile[0].save(function(err, updatedProfile){
-        if(err) { return respond(err); }
-        return respond(null, {response: 'success',entity: updatedProfile});
-      });
-  }
-});
-
-});
-
-  this.add('role:profile,cmd:getProfile', function(msg, respond) {
-      return Profile.find({username: msg.username}, function(err, retrievedProfile) {
-        if(err) { return respond(err); }
-        if(retrievedProfile.length === 0) { return respond(null,{response:'fail'}); }
-        return respond(null, {response: 'success', entity: retrievedProfile});
-        });
-      });
-
-      this.add('role:profile,cmd:updateTotalGames', function(msg, respond) {
-        return Profile.find({username: msg.username}, function(err, retrievedProfiles) {
+        retrievedProfile[0].name= msg.name;
+        retrievedProfile[0].imageLink= msg.imageLink;
+        retrievedProfile[0].age= msg.age;
+        retrievedProfile[0].country= msg.country;
+        retrievedProfile[0].save(function(err, updatedProfile) {
           if(err) { return respond(err); }
-          if(retrievedProfiles.length === 0) { return respond(null, {response: 'fail'}); }
-          retrievedProfiles[0].totalGames = msg.totalGames;
-          retrievedProfiles[0].save(function(err, updatedProfile){
-            if(err) { return respond(err); }
-            return respond(null, {response: 'success'});
-          })
+          return respond(null, {response: 'success',entity: updatedProfile});
         });
+      }
       });
+  });
 
-      this.add('role:profile,cmd:delete', function(msg, respond) {
-        return Profile.remove({username:msg.username}, function(err) {
-          if(err) { return respond(err); }
-          return respond(null, {response: 'success'});
-        });
-      });
-
-
-      this.add('role:profile,cmd:dangerouslyDeleteAllProfiles', function(msg, respond) {
-      return Profile.remove({}, function(err) {
-        if(err) { return respond(err); }
-        return respond(null, {response: 'success'});
-      });
+  this.add('role:profile,cmd:dangerouslyDeleteAllProfile', function(msg, respond) {
+    return Profile.remove({}, function(err) {
+      if(err) { return respond(err); }
+      return respond(null, {response: 'success'});
     });
-
-  };
+  });
+};

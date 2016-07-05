@@ -1,0 +1,28 @@
+{
+  "name": "roboto-and-material-icons-fonts",
+  "description": "A simple package providing the Roboto fontface and Material Icons fontface.",
+  "version": "1.0.1",
+  "main": [
+    "./css/material-icons.css",
+    "./css/roboto.css",
+    "./css/material-icons.min.css",
+    "./css/roboto.min.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "homepage": "https://github.com/lorenzbaum/roboto-and-material-icons-fonts",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "4b61b8450d5cbe9fdccf6154493e70198a482396"
+  },
+  "_source": "https://github.com/lorenzbaum/roboto-and-material-icons-fonts.git",
+  "_target": "^1.0.1",
+  "_originalSource": "roboto-and-material-icons-fonts"
+}

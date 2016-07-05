@@ -15,7 +15,6 @@ const profile = {
   age:"25",
   country:"SomeCountry",
   totalGames:"5",
-  userId:"123",
   }
 
 describe('Setup', function() {
@@ -48,6 +47,32 @@ describe('Profile Microservice API', function() {
     .expect('Content-Type', /json/)
     .end(function(err, res) {
       if(err) { return done(err); }
+      res.body.should.have.property('_id');
+      createdProfileId = res.body[0]._id;
+      res.body.should.have.property('username');
+      res.body.username.should.be.exactly(profile.username);
+      res.body.should.have.property('name');
+      res.body.name.should.be.exactly(profile.name);
+      res.body.should.have.property('imageLink');
+      res.body.imageLink.should.be.exactly(profile.imageLink);
+      res.body.should.have.property('age');
+      res.body.age.should.be.exactly(profile.age);
+      res.body.should.have.property('country');
+      res.body.country.should.be.exactly(profile.country);
+      res.body.should.have.property('totalGames');
+      res.body.totalGames.should.be.exactly(profile.totalGames);
+      res.body.should.have.property('userId');
+      res.body.userId.should.be.exactly(profile.userId);
+      done();
+    });
+  });
+
+  it('Retrieve all profile', function(done) {
+    request(app)
+    .get('/api/v1/profile')
+    .expect(201)
+    .end(function(err, res) {
+      if(err) { return done(err); }
       res.body[0].should.have.property('_id');
       createdProfileId = res.body[0]._id;
       res.body[0].should.have.property('username');
@@ -67,6 +92,7 @@ describe('Profile Microservice API', function() {
       done();
     });
   });
+
 });
 
 describe('Teardown', function() {

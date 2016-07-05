@@ -7,7 +7,7 @@ var ProfileSchema = new Schema({
   imageLink :{ type: String},
   age :{ type: Number},
   country :{ type: String},
-  totalGames :{ type: Number},
+  totalGames :{ type: Number}
 });
 
 exports = module.exports = mongoose.model('Profile', ProfileSchema);
