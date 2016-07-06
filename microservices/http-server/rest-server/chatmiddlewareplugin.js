@@ -21,19 +21,22 @@ exports = module.exports = function(options) {
       console.log('=====Setup TX=====');
       tx.use('redis-transport');
       tx.client({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'});
-      if(options.cb) {
-        tx.ready(function()
-        {
-           options.cb('ready');
-        })
-      }
   });
 
   this.add('role:chat,cmd:sendMsg', function(msg, respond) {
             return tx.ready(function(err){
             if(err) { return respond(err); }
+            console.log("========Inside Middleware No Act on plugin happened=====");
             return tx.act('role:chat,roomId:'+self.roomId+',cmd:send',{msg:msg.msg},respond);
           });
     });
+
+  this.add('role:chat,cmd:unsubscribe',function(msg,respond){
+      console.log("=====Inside Plugin to, msg is to unsubscribe the channel====",msg.msg);
+      return tx.unsubscribe({type:'redis',pin:'role:chat,roomId:'+self.roomId+',cmd:*'},function(err){
+          if(err) { return respond(err); }
+          return respond(null,{response:'success',message:'unsubscibed'})
+      })
+  });
 
   }

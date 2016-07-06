@@ -40,31 +40,62 @@ app.use(require('body-parser').json());
 
 app.use('/api/v1', require('./router'));
 
-var chat = io.of('/chat')
-chat.on('connection', function(socket) {
+var chat = io.of('/chat');
+// var chat1 = io.of('/chat1');
 
+// chat1.on('connection',function(socket){
+//     console.log("====Inside socket.io of chat 1======");
+//
+//     socket.on('call_socket2',function(text){
+//       console.log("====Inside Express from Socket 2 msg is:",text);
+//     })
+// });
+// chat1.on('disconnect',function(socket){
+//   console.log("=====Inside Express when socket 1 closes====");
+//   socket.close();
+// });
+
+chat.on('connection', function(socket) {
   console.log("Inside socket.io");
   var chatMiddlewareMicroservice = require('seneca')();
   var flag = false;
-  socket.on('create_room', function(id){
+  var count =0;
+  socket.on('create_room', function(userids){
     // chatmiddleware.use('redis-transport');
-        chatMiddlewareMicroservice.use('chatmiddlewareplugin',
-        {chatroomId:id,socket:socket,cb:function(res){if (res==='ready') {flag=true}}
-      });
-      console.log(flag);
-  });
-  socket.on('chat_message', function(msgToSend){
-    console.log(msgToSend);
-    if(flag){
-      chatMiddlewareMicroservice.act('role:chat,cmd:sendMsg', {msg: msgToSend}, function(err, response) {
-          if(err) { console.error('===== ERR: ', err, ' ====='); return res.status(500).send(); }
-          if(response.response !== 'success') { return res.status(409).send(); }
-          return res.status(201).send();
-      // chat.emit('received_msg', msg);
-            });
-    }
 
+    count++;
+    console.log("=====Inside App.js Socket initaited , ",count);
+      var channelId = false;
+      mesh.act('role:chat,cmd:joinprivateroom',{ids:userids}, function(err, response){
+          if(err) { console.error('===== ERR: ', err, ' =====');  }
+
+          console.log("Inside App.js getting room ID===",response.roomId[0].object);
+          channelId = response.roomId[0].object ;
+      }).ready(function(){
+      chatMiddlewareMicroservice.use('chatmiddlewareplugin',{chatroomId:channelId,socket:socket});
+    });
+  });
+
+  socket.on('chat_message', function(msgToSend){
+    console.log("Inside App.js meessage from client via socket====",msgToSend);
+
+      console.log("Inside App.js meessage from client via socket inside flag condition====",msgToSend);
+      chatMiddlewareMicroservice.act('role:chat,cmd:sendMsg', {msg: msgToSend}, function(err, response) {
+          if(err) { console.error('===== ERR: ', err, ' =====');  }
+          if(response.response === 'success')
+          console.log("====Inside express after acting the response is msg ,===",response.message);
+        });
       });
+
+    socket.on('disconnect',function(){
+      chatMiddlewareMicroservice.act('role:chat,cmd:unsubscribe', {msg: 'unsubscribe'}, function(err, response) {
+          if(err) { console.error('===== ERR: ', err, ' =====');  }
+          if(response.response === 'success')
+          console.log("====Inside express unsubscribed from redis=== ",response.message);
+        });
+      console.log("=====Inside Express Socket.disconnected and redis unsubscribed=====");
+
+    });
 });
 
 app.get('/topics',function(req,res) {

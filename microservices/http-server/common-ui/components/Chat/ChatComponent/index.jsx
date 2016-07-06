@@ -17,13 +17,14 @@ export default class ChatComponent extends React.Component{
   constructor(props) {
     super(props);
     this.state ={view:'OnlineList'}
+    console.log("===Inside Chat Component, Initial View : ",this.state.view);
   }
 
  openChatBox(name,GroupData,UserData,groupFlag) {
-   console.log("Chat component"+name);
+   console.log("===Inside Chat Component, Chat Box being opened for: ",name);
    this.setState({user:name , GroupData: GroupData , UserData : UserData ,groupFlag:groupFlag,view:'ChatBox'});
  }
- closeChatBox(){
+ closeChatBox(text){
     this.setState({view:'OnlineList'});
  }
 

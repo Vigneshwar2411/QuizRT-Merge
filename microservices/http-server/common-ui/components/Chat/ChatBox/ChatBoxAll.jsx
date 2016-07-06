@@ -22,7 +22,7 @@ const chatListStyle ={
   overflowY:'auto'
 }
 
-var socket = io.connect(restUrl+'/chat');
+// var socket = io.connect(restUrl+'/chat1');
 
 export default class ChatBoxAll extends React.Component {
   constructor(props) {
@@ -32,14 +32,14 @@ export default class ChatBoxAll extends React.Component {
   }
 
   componentDidMount(){
-    var id = {
-      roomId: 'abc'
-              }
-    socket.emit('create_room',id);
-    socket.on('received_msg',function(msgserver){
+
+    var ids = ["Vigneshwar",this.props.friendid];
+    this.props.socket.emit('create_room',ids);
+    // socket.emit('call_socket2',"From socket 2");
+    this.props.socket.on('received_msg',function(msgserver){
       console.log(msgserver);
-      var newmsg = this.state.messages.concat([{text : msgserver}])  //, id:Date.now(
-      this.setState({messages : newmsg});
+      // var newmsg = this.state.messages.concat([{text : msgserver}])  //, id:Date.now(
+      this.setState({messages : this.state.messages.concat([{text : msgserver}])});
     }.bind(this));
   }
 
@@ -49,11 +49,15 @@ export default class ChatBoxAll extends React.Component {
 
   submitForm(e){
     e.preventDefault();
-    socket.emit('chat_message', this.state.msg);
+    this.props.socket.emit('chat_message', this.state.msg);
     console.log("Chat message you sent",this.state.msg);
     this.setState({msg : ''});
   }
 
+
+  // componentWillUnmount(){
+  //   socket.emit('disconnect');
+  // }
 
   render() {
     return (

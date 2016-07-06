@@ -24,20 +24,20 @@ export default class ChatDrawer extends React.Component{
 
   constructor(props) {
     super(props);
-    this.state ={isOpen:false}
+    this.state ={isOpen:''}
   }
 
   openDrawer(){
-    this.setState({isOpen:true});
+    this.setState({isOpen:"open"});
   }
 
   closeDrawer() {
-    this.setState({isOpen: false});
+    this.setState({isOpen: 'close'});
   }
 
   handleClose(text){
     console.log(text);
-    this.setState({isOpen:false});
+    this.setState({isOpen:'close'});
   }
 
 
@@ -76,7 +76,7 @@ export default class ChatDrawer extends React.Component{
 
                 </div>
 
-                <div style={this.state.isOpen?chatDrawerOpen:chatDrawerClose}>
+                <div style={this.state.isOpen==='open'?chatDrawerOpen:chatDrawerClose}>
                   <ChatComponent onHandleClose={this.handleClose.bind(this)}/>
                  </div>
 

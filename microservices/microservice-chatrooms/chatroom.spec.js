@@ -121,7 +121,8 @@
         if(err) { return done(err); }
         response.should.have.property('response');
         response.response.should.be.exactly('success');
-        console.log("Retrieved RoomID",response.roomId);
+        console.log("Retrieved RoomID",response.roomId[0].object);
+        // console.log("Retrieved RoomID",response.roomId);
         done();
       });
     });
@@ -186,3 +187,15 @@
   //         {friends:1}
   //       }
   //     ]
+
+
+  //
+  // {this.state.groupFlag===true?
+  //   <div>
+  //     <center style={{margin:19}}>
+  //     <span style={{cursor:'pointer'}}>
+  //       <FontIcon className="muidocs-icon-navigation-more_vert" onTouchTap={this.popoverOpen.bind(this)}/>
+  //     </span>
+  //     </center>
+  //   </div>:null
+  // }

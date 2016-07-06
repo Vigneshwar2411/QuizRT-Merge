@@ -13,19 +13,29 @@ import GroupInfo from '../GroupInfo';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ChangeGroupName from '../ChangeGroupName';
+import base64 from 'base-64';
+import restUrl from '../../../restUrl';
 
-var user='Vigneshwar';
+var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
+username = username.split("@")[0];
+
+
+
 export default class ChatBox extends React.Component{
 
   constructor(props){
     super(props);
+    console.log("========Inside Chatbox in its constructor=======");
+    var socket1 = io.connect(restUrl+'/chat');
     this.state={
-      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: false,
+      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: false,userid: username,
+      socket:socket1
     }
   }
 
   componentDidMount(){
-  console.log("====inisde did mount of chat box",this.props.GroupFlag);
+  console.log("====inisde did mount of chat box, the flag is ",this.props.GroupFlag);
+    // this.setState({socket:socket1});
     if(this.props.GroupFlag){
       this.setState({
         GroupData : this.props.GroupData,
@@ -115,6 +125,14 @@ export default class ChatBox extends React.Component{
     })
   }
 
+  closeChatBox(){
+    console.log("=====Inside Chat Box , closing the socket connection====");
+    // socket1.close();
+    this.state.socket.disconnect();
+    // socket1.disconnect();
+    this.props.closeChatBox("Close Chatbox");
+  }
+
 
   render(){
 
@@ -132,6 +150,7 @@ export default class ChatBox extends React.Component{
     ];
     var outerThis=this;
     console.log("=====Insisde chatbox check flag ,state of groupflag",this.state.groupFlag);
+
     return(
       <div>
         <div>
@@ -148,14 +167,14 @@ export default class ChatBox extends React.Component{
         <div className="row" style={{height:'10%'}}>
               <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3" >
                 <div style={{marginLeft:20,marginTop:19}}><span style={{cursor:'pointer'}}>
-                  <FontIcon className="muidocs-icon-navigation-arrow_back" onTouchTap={this.props.closeChatBox}/>
+                  <FontIcon className="muidocs-icon-navigation-arrow_back" onTouchTap={this.closeChatBox.bind(this)}/>
                 </span></div>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <h3 style={{textAlign:'center'}}>{this.props.Name}</h3>
               </div>
               <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-              {this.state.groupFlag?<h2>Hi</h2>:<h2>Not a group</h2>}
+
 
                 <Popover
                   open={this.state.popoverOpen}
@@ -180,7 +199,7 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll uid="test"/> :null
+              <ChatBoxAll friendid={this.props.Name} userid={this.state.userid} socket={this.state.socket}/> :null
           }
 
         </div>
