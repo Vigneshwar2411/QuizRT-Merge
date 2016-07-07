@@ -46,9 +46,10 @@ exports = module.exports = function(options) {
   });
 
   this.add('role:profile,cmd:getProfile', function(msg, respond) {
-    return Profile.find({username:"admin"}, function (err, retrievedProfile) {
+    console.log("=============Inside plugin getProfile list msg==== ",msg);
+    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
-      return respond(null, {response: 'success', entity: retrievedProfile});
+      return respond(null, {response: 'success', profile: retrievedProfile});
     });
   });
 

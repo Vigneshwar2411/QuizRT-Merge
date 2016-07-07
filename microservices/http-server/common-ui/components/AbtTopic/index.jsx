@@ -109,7 +109,7 @@ const iconStyles = {
 
 
       var request = $.ajax({
-      url: restUrl + '/api/v1/topic'+,
+      url: restUrl + '/api/v1/topic',
       type: 'GET',
       data:JSON.stringify(data1),
       headers: {JWT: localStorage.token}

@@ -131,7 +131,7 @@ export default class Profile extends React.Component{
               var friendsData = {
                 subject: this.state.Profile.username.value,
                 relation: "sent friend request",
-                object: "Preethi",
+                object: "preethi1@gmail.com",
                 };
 
               var request = $.ajax({
@@ -159,16 +159,10 @@ export default class Profile extends React.Component{
   componentDidMount(){
     console.log(this.state.Profile.username.value);
 
-    var data1 = {
-      username: this.state.Profile.username.value,
-    };
-
     var request = $.ajax({
-    url: restUrl + '/api/v1/profile',
+    url: restUrl + '/api/v1/profile/'+this.state.Profile.username.value,
     type: 'GET',
-    data:JSON.stringify(data1),
     contentType: 'application/json',
-    headers: {JWT: localStorage.token}
     });
     request.done(function(data) {
     console.log(JSON.stringify(data));
@@ -177,6 +171,7 @@ export default class Profile extends React.Component{
     request.fail(function() {
     console.error('Profile err');
     }.bind(this));
+
   };
 
   render(){
@@ -193,6 +188,11 @@ export default class Profile extends React.Component{
         onTouchTap={this.handleSubmit.bind(this)}
       />,
     ];
+    console.log("arr[0]",this.state.arr[0]);
+    // this.state.Profile.username.value.split("@")[0]
+    // var profile = this.state.arr[0];
+    // console.log(profile);
+
     return(
       <div>
       <Card>
@@ -200,13 +200,12 @@ export default class Profile extends React.Component{
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
               <div style={{width: '100%', textAlign: 'center'}}>
                 <Avatar size={80} style={{margin: '30px 0 30px'}}
-                 src={this.state.arr[0].imageLink}
+                 src={this.state.arr.imageLink}
                />
               </div>
             </div>
             <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
               <h2>{this.state.arr[0].name}</h2>
-              <h4>Title</h4>
               <h5>{this.state.arr[0].age},{this.state.arr[0].country}</h5>
             </div>
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" >

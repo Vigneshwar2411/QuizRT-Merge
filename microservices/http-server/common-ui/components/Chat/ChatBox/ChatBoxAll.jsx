@@ -20,7 +20,7 @@ const chatListStyle ={
   overflowY:'auto'
 }
 
-var socket = io("/chat");
+//var socket = io("/chat");
 
 export default class ChatBoxAll extends React.Component {
   constructor(props) {
