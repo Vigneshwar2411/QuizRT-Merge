@@ -160,13 +160,14 @@ export default class Profile extends React.Component{
     console.log(this.state.Profile.username.value);
 
     var data1 = {
-      username: "admin"
+      username: this.state.Profile.username.value,
     };
 
     var request = $.ajax({
     url: restUrl + '/api/v1/profile',
     type: 'GET',
     data:JSON.stringify(data1),
+    contentType: 'application/json',
     headers: {JWT: localStorage.token}
     });
     request.done(function(data) {
