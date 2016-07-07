@@ -163,7 +163,7 @@ export default class OnlineList extends React.Component{
           members:groupInfo.users
       };
       // console.log(JSON.stringify(groupDataPost));
-      // console.log(groupDataPost);
+      console.log(groupDataPost);
 
       // var request2 = $.ajax({
       //   url: restUrl + '/api/v1/groupslist/addgroup',
@@ -179,15 +179,20 @@ export default class OnlineList extends React.Component{
       //     console.log("Inside request.fail of postgroups============");
       // }.bind(this));
 
-      // $.ajax({
-      //   url: "http://localhost:8080/groups",
-      //   dataType: 'json',
-      //   type: 'POST',
-      //   data: groupDataPost,
-      //   error: function(xhr, status, err) {
-      //     console.error("http://localhost:8080/groups", status, err.toString());
-      //   }.bind(this)
-      // });
+      $.ajax({
+        url: restUrl + '/api/v1/groupslist/addgroup',
+        contentType: 'application/json',
+        type: 'POST',
+        data: JSON.stringify(groupDataPost),
+        success : function(data){
+          console.log("=====inside Post group");
+          console.log("====Inside Post group ",data.groupdata);
+          this.setState({GroupData: this.state.GroupData.concat(data.groupdata)});
+        }.bind(this),
+        error: function(xhr, status, err) {
+          console.log("Inside Online list Post groupo method, Faill response from server");
+        }.bind(this)
+      });
     }
 
     addGroup(groupname,groupusers){
@@ -216,6 +221,7 @@ export default class OnlineList extends React.Component{
     render(){
 
       var outerThis = this;
+      console.log("=======Inside Onlinelist group data after getting groups list== ",this.state.GroupData);
       return(
             <div style={{height:'100vh', overflowY:'auto'}}>
 

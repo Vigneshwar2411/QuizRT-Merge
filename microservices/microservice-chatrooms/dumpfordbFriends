@@ -1,27 +1,27 @@
 [
   {
     "_id": "57765c2d7ad3e4a7f0751cf9",
-    "subject": "Vigneshwar",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
     "relation": "Sent a Friend Request",
-    "object": "Sandeep"
+    "object": "sandeep1@gmail.com@gmail.com"
   },
   {
     "_id": "57765c2d909152b118168527",
-    "subject": "Vigneshwar",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
     "relation": "Sent a Friend Request",
-    "object": "Deepak"
+    "object": "deepak1@gmail.com@gmail.com"
   },
   {
     "_id": "57765c2d14656b3aaa4f9f3f",
-    "subject": "Vigneshwar",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
     "relation": "Sent a Friend Request",
-    "object": "Ram"
+    "object": "ram@gmail.com@gmail.com"
   },
   {
     "_id": "57765c2d9b9e9ba5feb79e65",
-    "subject": "Vigneshwar",
+    "subject": "vigneshwar1@gmail.com@gmail.com",
     "relation": "Sent a Friend Request",
-    "object": "Preethi"
+    "object": "preethi1@gmail.com@gmail.com"
   },
   {
     "_id": "57765c2d7479a9d79c5a4158",
@@ -110,8 +110,8 @@
   {
     "_id": "5776609fa46a62dcd32093e1",
     "subject": [
-      "Vigneshwar",
-      "Sandeep"
+      "vigneshwar1@gmail.com",
+      "sandeep1@gmail.com"
     ],
     "relation": "Friends",
     "object": "3173"
@@ -119,8 +119,8 @@
   {
     "_id": "5776609f99f8acb13bcb0421",
     "subject": [
-      "Vigneshwar",
-      "Deepak"
+      "vigneshwar1@gmail.com",
+      "deepak1@gmail.com"
     ],
     "relation": "Friends",
     "object": "3479"
@@ -128,8 +128,8 @@
   {
     "_id": "5776609ffe83fdd2730168b6",
     "subject": [
-      "Vigneshwar",
-      "Ram"
+      "vigneshwar1@gmail.com",
+      "ram@gmail.com"
     ],
     "relation": "Friends",
     "object": "1833"
@@ -137,8 +137,8 @@
   {
     "_id": "5776609f10ba892e02ea135f",
     "subject": [
-      "Vigneshwar",
-      "Preethi"
+      "vigneshwar1@gmail.com",
+      "preethi1@gmail.com"
     ],
     "relation": "Friends",
     "object": "3294"
@@ -280,12 +280,12 @@
   }
 ]
 
-db.friends.aggregate([{$match: {relation:"Friends"}},{$match:{subject:"Vigneshwar"}},{$group:{_id:"$subject"}},{$unwind:"$_id"},{$group:{_id:null,tags:{$addToSet:"$_id"}}}])
-{ "_id" : null, "tags" : [ "Vigneshwar", "Preethi", "Sandeep", "Ram", "Deepak" ] }
+db.friends.aggregate([{$match: {relation:"Friends"}},{$match:{subject:"vigneshwar1@gmail.com"}},{$group:{_id:"$subject"}},{$unwind:"$_id"},{$group:{_id:null,tags:{$addToSet:"$_id"}}}])
+{ "_id" : null, "tags" : [ "vigneshwar1@gmail.com", "preethi1@gmail.com", "sandeep1@gmail.com", "ram@gmail.com", "deepak1@gmail.com" ] }
 
 
-db.friends.aggregate([{$match:{relation:"Friends",subject:"Vigneshwar",subject:"Sandeep"}}])
-{ "_id" : "5776609fa46a62dcd32093e1", "subject" : [ "Vigneshwar", "Sandeep" ], "relation" : "Friends", "object" : "3173" }
+db.friends.aggregate([{$match:{relation:"Friends",subject:"vigneshwar1@gmail.com",subject:"sandeep1@gmail.com"}}])
+{ "_id" : "5776609fa46a62dcd32093e1", "subject" : [ "vigneshwar1@gmail.com", "sandeep1@gmail.com" ], "relation" : "Friends", "object" : "3173" }
 
 
 
@@ -302,4 +302,4 @@ describe('Retrieve Friends', function() {
 });
 
 
-db.friends.update({subject:"417"},{$pull:{object:"Vigneshwar"}})
+db.friends.update({subject:"417"},{$pull:{object:"vigneshwar1@gmail.com"}})

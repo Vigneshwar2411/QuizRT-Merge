@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import TextField from 'material-ui/TextField';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import Divider from 'material-ui/Divider';
@@ -25,13 +25,14 @@ componentDidMount(){
   var outerThis=this;
   console.log(typeof(this.props.GroupData));
   console.log(this.props.GroupData);
+  console.log(this.props.UserData);
   var temp =[];
-  JSON.parse(this.props.GroupData.users).map(function(u){
+  this.props.GroupData.map(function(u){
     outerThis.props.UserData.map(function(d){
-      if(u===d.Name){
-        console.log(d.Name);
-        console.log(d.img);
-        temp= temp.concat({name:d.Name , img:d.img})
+      if(u===d.username){
+        console.log(d.username);
+        console.log(d.useravatar);
+        temp= temp.concat({name:d.username , img:d.useravatar})
       }
     })
   })

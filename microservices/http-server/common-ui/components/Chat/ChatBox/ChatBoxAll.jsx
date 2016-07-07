@@ -33,7 +33,7 @@ export default class ChatBoxAll extends React.Component {
 
   componentDidMount(){
 
-    var ids = ["Vigneshwar",this.props.friendid];
+    var ids = ["Vigneshwar",this.props.friendid]; 
     this.props.socket.emit('create_room',ids);
     // socket.emit('call_socket2',"From socket 2");
     this.props.socket.on('received_msg',function(msgserver){

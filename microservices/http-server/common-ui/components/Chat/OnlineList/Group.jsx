@@ -29,14 +29,16 @@ import base64 from 'base-64';
     margin: 5,
   }
 
+  var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
+  username = username.split("@")[0];
+
 export default class Group extends React.Component{
 
   constructor(props){
     super(props);
-    var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
-    username = username.split("@")[0];
+
     this.state=({
-      groupName: "",selectedusers:[username],selected:'', users:[]
+      groupName: "",selectedusers:[],selected:'', users:[]
     })
   }
 
@@ -61,6 +63,7 @@ export default class Group extends React.Component{
   }
 
   handleSubmit(){
+    this.setState({selectedusers:this.state.selectedusers.concat(username)})
     this.props.addGroup(this.state.groupName,this.state.selectedusers);
     this.props.close;
     this.setState({

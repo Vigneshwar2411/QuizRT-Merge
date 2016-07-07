@@ -11,6 +11,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import ChatBoxAll from './ChatBoxAll';
 import GroupInfo from '../GroupInfo';
 import Dialog from 'material-ui/Dialog';
+import Avatar from 'material-ui/Avatar';
 import FlatButton from 'material-ui/FlatButton';
 import ChangeGroupName from '../ChangeGroupName';
 import base64 from 'base-64';
@@ -19,7 +20,7 @@ import restUrl from '../../../restUrl';
 var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
 username = username.split("@")[0];
 
-
+const style = {margin : 5};
 
 export default class ChatBox extends React.Component{
 
@@ -28,7 +29,7 @@ export default class ChatBox extends React.Component{
     console.log("========Inside Chatbox in its constructor=======");
     var socket1 = io.connect(restUrl+'/chat');
     this.state={
-      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: false,userid: username,
+      view:'chatbox',popoverOpen : false, GroupData:[], dialogOpen: false,groupFlag: this.props.GroupFlag,userid: username,
       socket:socket1
     }
   }
@@ -40,9 +41,8 @@ export default class ChatBox extends React.Component{
       this.setState({
         GroupData : this.props.GroupData,
         UserData : this.props.UserData,
-        UserArray : JSON.parse(this.props.GroupData.users),
+        UserArray : this.props.GroupData.users,
         titleName : this.props.Name,
-        groupFlag : true
       })
     }
     else{
@@ -51,7 +51,6 @@ export default class ChatBox extends React.Component{
         UserData : this.props.UserData,
         UserArray : null,
         titleName : this.props.Name,
-        groupFlag : false
       })
     }
 
@@ -171,10 +170,22 @@ export default class ChatBox extends React.Component{
                 </span></div>
               </div>
               <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <h3 style={{textAlign:'center'}}>{this.props.Name}</h3>
+                <div className="row">
+                  <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <Avatar src='http://lorempixel.com/100/100' size={30} style={style} />
+                  </div>
+                  <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <h3 style={{textAlign:'center'}}>{this.props.Name}</h3>
+                  </div>
+                </div>
               </div>
               <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
+                {this.state.groupFlag?
+                  <center style={{margin:19}}>
+                    <span style={{cursor:'pointer'}}>
+                      <FontIcon className="muidocs-icon-navigation-more_vert" onTouchTap={this.popoverOpen.bind(this)}/>
+                    </span>
+                  </center>:null}
 
                 <Popover
                   open={this.state.popoverOpen}
@@ -199,7 +210,8 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll friendid={this.props.Name} userid={this.state.userid} socket={this.state.socket}/> :null
+              <ChatBoxAll friendid={this.props.Name} userid={this.state.userid} socket={this.state.socket}/> :
+              this.state.view==="groupinfo" ? <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> : null
           }
 
         </div>
@@ -210,8 +222,8 @@ export default class ChatBox extends React.Component{
 
 
 };
-
-
+//
+//
 // (this.state.view==="groupinfo" && this.state.groupFlag === true) ?
 // <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> :
 // (this.state.view==="changename" && this.state.groupFlag === true)?

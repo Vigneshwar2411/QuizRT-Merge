@@ -1,8 +1,9 @@
 [
   {
     "_id": "57775b673bfa1952e6a825d8",
-    "username": "Vigneshwar",
-    "useravatar": "http://lorempixel.com/100/100"
+    "username": "vigneshwar1@gmail.com",
+    "useravatar": "http://lorempixel.com/100/100",
+    "age":2
   },
   {
     "_id": "57775b67eb94fc60ba5c3fd7",
@@ -42,7 +43,7 @@ if(retrievedFriends.length > 0){
       if(err) {return respond(err); }
       return respond(null, {response:'success',friends:friendsData})
   })
-  // b.user.aggregate([{$match:{username:{$in:["Vigneshwar","Sandeep"]}}}])
+  // b.user.aggregate([{$match:{username:{$in:["vigneshwar1@gmail.com","Sandeep"]}}}])
 }
 
 
@@ -60,4 +61,4 @@ if(retrievedFriends.length > 0){
 
 db.groups.aggregate([{$match:{_id:ObjectId("57793b7072302b5923e96abb")}}])
 
-db.friends.aggregate([{$match:{relation:"Members are",object:"Vigneshwar"}},{$group:{_id:null,groups:{$addToSet:"$subject"}}}])
+db.friends.aggregate([{$match:{relation:"Members are",object:"vigneshwar1@gmail.com"}},{$group:{_id:null,groups:{$addToSet:"$subject"}}}])

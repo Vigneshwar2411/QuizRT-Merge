@@ -11,6 +11,7 @@ exports = module.exports = function(options) {
 
   rx.use('redis-transport')
     .add('role:chat,roomId:'+self.roomId+',cmd:send',function(msg,respond){
+      console.log('msg object inside the rx:'+msg);
     console.log('recieved msg chatroom1:'+msg.msg);
     self.socket.emit('received_msg',msg.msg);
     return respond(null,{response:'success',message:msg.msg});

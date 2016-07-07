@@ -93,6 +93,20 @@ exports = module.exports = function(options) {
       });
   });
 
+  this.add('role:chat,cmd:getGroupMembers',function(msg,respond){
+    return Friends.aggregate([
+      { $match:
+          {relation:"members are",subject:"3456"}
+
+      }
+
+    ],function(err,retrievedGroupsMembers){
+
+    });
+  });
+  db.friends.aggregate([{ $match:{relation:"Members are",subject:"1160"}},{$group:{_id:"$object"}},{$unwind:"$_id"},{$group:{_id:null,friends:{$addToSet:"$_id"}}},{$project:{friends:1}}])
+
+
   this.add('role:chat,cmd:leavegroup',function(msg,respond){
       return Friend.update(
         {subject:msg.gid},//give group id i.e.,topic id of group
@@ -101,10 +115,6 @@ exports = module.exports = function(options) {
           return respond(null,{response:'success',updatedgroup:updatedGroup})
         });
   });
-
-  // this.add('role:chat,cmd:updategroupname',function(msg,repsond){
-  //
-  // });
 
   this.add('role:chat,cmd:creategroup',function(msg,respond){
     return Groups.create(msg,function(err,createdGroup){
