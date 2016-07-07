@@ -3,13 +3,15 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
-
+var Twitter = require('twitter');
+const twitterConfig =  require('./config/twitter.config')
 
 var mesh = seneca();
 mesh.use('mesh',{auto:true});
 
 var context = require('./context');
 context.mesh = mesh;
+
 context.authorizeMiddleware = function(req, res, next) {
   mesh.act('role:jwt,cmd:verify', {token: req.get('JWT')}, function(err, response) {
     if(err) { return res.status(500).json(err); }
@@ -18,6 +20,28 @@ context.authorizeMiddleware = function(req, res, next) {
     next();
   });
 };
+
+var nsp = io.of('/my-namespace');
+
+nsp.on('connection', function(socket){
+  console.log("connection created");
+});
+
+var client = new Twitter(twitterConfig);
+
+util =  require('util');
+//
+
+client.stream('statuses/filter', {track: '#PunjabOnTheRise'},  function(stream) {
+  stream.on('data', function(tweet) {
+   nsp.emit('tweetData',tweet);
+   console.log(util.inspect(tweet.user.id));
+  });
+
+  stream.on('error', function(error) {
+    console.log(error);
+  });
+});
 
 
 var env = process.env.NODE_ENV || 'dev';
@@ -38,18 +62,8 @@ if(env.trim() === 'dev') {
 
 app.use(require('body-parser').json());
 
-app.use('/api/v1', require('./router'));
-// 
-// var chat = io.of("/chat")
-// chat.on('connection', function(socket){
-//   console.log("Inside socket.io");
-//   socket.on('chat message', function(msg){
-//     console.log(msg);
-//     chat.emit('chat message', msg);
-//   });
-// });
-
-
+app.use('/api/v1',require('./router'));
+//
 
 
 app.get('/topics',function(req,res) {
@@ -65,32 +79,32 @@ app.get('/topics',function(req,res) {
 });
 
 //
-// app.post('/api/signup',function(req,res){
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
-//   console.log("inside /api/signup");
-//     var data = {
-//       username : req.body.name,
-//       password : req.body.password
-//     }
-//     console.log(data);
-//       mesh.act('role:authentication,cmd:create',data,function(err,response){
-//         if(err) { return res.status(500).json(err); }
-//         if(response.response==='success'){
-//
-//           res.json({
-//             success: true
-//           })
-//         }
-//         else {
-//           res.json({
-//             message : 'User Already Exists',
-//             success : false
-//           })
-//         }
-//       })
-//     });
+app.post('/api/signup',function(req,res){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
+  console.log("inside /api/signup");
+    var data = {
+      username : req.body.name,
+      password : req.body.password
+    }
+    console.log(data);
+      mesh.act('role:authentication,cmd:create',data,function(err,response){
+        if(err) { return res.status(500).json(err); }
+        if(response.response==='success'){
+
+          res.json({
+            success: true
+          })
+        }
+        else {
+          res.json({
+            message : 'User Already Exists',
+            success : false
+          })
+        }
+      })
+    });
 
 
 // io.on('connection',function(socket){
@@ -129,7 +143,7 @@ app.get('/topics',function(req,res) {
 //   });
 // })
 
-
+//
 app.get('/topics/myfav',function(req,res) {
  mesh.act('role:myFav,action:retrive',{user:req.params.uid},function(err,result){
  if (err) return console.error(err)
@@ -192,6 +206,9 @@ app.post('/api/check',function(req,res){
  })
 });
 
+// server.listen(8080,function(){
+//   console.log('Server is running at the port ' + 8080);
+// });
 
 app.use(function(req, res) {
   return res.status(404).send();

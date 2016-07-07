@@ -1,6 +1,6 @@
  import React from 'react';
 import QuizWar from './quizwar';
-import Cookie from 'react-cookie';
+//import Cookie from 'react-cookie';
 import TournamentSection from './tournamentsection';
 // import MostPopularSection from './mostpopular';
 // import MyFavoriteSection from './myfavoritetopics';

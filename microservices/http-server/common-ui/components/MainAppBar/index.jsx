@@ -73,6 +73,10 @@ export default class MainAppBar extends React.Component {
     e.preventDefault();
     this.context.router.push('/');
   }
+openProfile(e){
+  e.preventDefault();
+  this.context.router.push('/profile');
+}
 
   handleDrawerOpen() {
     this.setState({open: true});
@@ -122,6 +126,7 @@ export default class MainAppBar extends React.Component {
             <ListItem primaryText="Home" leftIcon={<ActionHome />}
               onTouchTap={this.goToDashBoard.bind(this)}/>
             <ListItem primaryText="View Profile" leftIcon={<ActionAccountbox />}
+                onTouchTap={this.openProfile.bind(this)}
               />
             <ListItem primaryText="Topics" leftIcon={<ActionViewmodule />}
               onTouchTap={this.handleTopics.bind(this)}/>

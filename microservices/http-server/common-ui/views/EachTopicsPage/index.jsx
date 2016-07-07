@@ -3,7 +3,7 @@ import MainAppBar from '../../components/MainAppBar';
 import ChatDrawer from '../../components/Chat/ChatDrawer';
 import AbtTopic from '../../components/AbtTopic';
 import MediaQuery from 'react-responsive';
-
+import CommentBox from '../../components/TimeLine/CommentBox';
 export default class EachTopicsPage extends React.Component {
   constructor() {
     super();
@@ -25,7 +25,8 @@ export default class EachTopicsPage extends React.Component {
               <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
               <AbtTopic/>
               </div>
-              <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+               <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+               <CommentBox/>
               </div>
               <div className="col-xs-2 col-sm-2 col-md-2 col-lg-2">
               <ChatDrawer/>
