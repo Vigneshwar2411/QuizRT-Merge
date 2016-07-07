@@ -3,8 +3,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
-var Twitter = require('twitter');
-const twitterConfig =  require('./config/twitter.config')
+
 
 var mesh = seneca();
 mesh.use('mesh',{auto:true});
@@ -21,27 +20,7 @@ context.authorizeMiddleware = function(req, res, next) {
   });
 };
 
-var nsp = io.of('/my-namespace');
 
-nsp.on('connection', function(socket){
-  console.log("connection created");
-});
-
-var client = new Twitter(twitterConfig);
-
-util =  require('util');
-//
-
-client.stream('statuses/filter', {track: '#PunjabOnTheRise'},  function(stream) {
-  stream.on('data', function(tweet) {
-   nsp.emit('tweetData',tweet);
-   console.log(util.inspect(tweet.user.id));
-  });
-
-  stream.on('error', function(error) {
-    console.log(error);
-  });
-});
 
 
 var env = process.env.NODE_ENV || 'dev';
@@ -80,10 +59,16 @@ app.get('/topics',function(req,res) {
 
 //
 app.post('/api/signup',function(req,res){
+<<<<<<< HEAD
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,PATCH");
   console.log("inside /api/signup");
+=======
+  console.log("inside /api/signup");
+  // res.header("Access-Control-Allow-Origin", "*");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+>>>>>>> 4d803bdf7ebf780a2e583921ac8bc7325509c742
     var data = {
       username : req.body.name,
       password : req.body.password
