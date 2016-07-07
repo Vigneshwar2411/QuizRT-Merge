@@ -1,6 +1,6 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+//import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
@@ -21,7 +21,7 @@ export default class Post extends React.Component{
 
   handleKeyDown(e) {
     if(e.keyCode === 13) {
-      this.props.submitComment(this.state.value,this.props.postData.id);
+      this.props.submitComment(this.state.value,this.props.postData._id);
         this.setState({value:""});
     }
   }

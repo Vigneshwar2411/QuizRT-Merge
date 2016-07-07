@@ -21,14 +21,15 @@ loadDataFromSever(){
 
   request.done(function(data) {
 
-              console.log("=======retrievedPosts=======",JSON.stringify(posts));
-              var posts =  data.posts;
-
+              console.log("=======retrievedPosts=======",JSON.stringify(data));
+              //var Data  =  JSON.stringify(data)
+               var posts =  data.posts;
+               console.log("========posts",posts);
                 posts.map(function(postData){
                 commentList.set(postData._id,[]);   //initializing commentList ..postid as key
                 console.log("key:"+postData._id);
               });
-             this.setState({postList: posts});
+              this.setState({postList:posts});
 
     }.bind(this));
 
@@ -66,15 +67,15 @@ loadDataFromSever(){
           this.loadDataFromSever();
           console.log(" new new  componentDidMount called");
           var  that = this;
-          socket.on('tweetData', function getTweet (tweet) {
-           console.log("============tweet ",tweet);
-          if(tweet.user.id!="undefined"){
-             console.log(tweet);
-             var post = {id:tweet.user.id,text:tweet.text,imgUrl:tweet.user.profile_image_url,user:tweet.user.name};
-             commentList.set(tweet.user.id,[]);
-             that.setState({postList:[post].concat(that.state.postList)});
-         }
-});
+//           socket.on('tweetData', function getTweet (tweet) {
+//            console.log("============tweet ",tweet);
+//           if(tweet.user.id!="undefined"){
+//              console.log(tweet);
+//              var post = {id:tweet.user.id,text:tweet.text,imgUrl:tweet.user.profile_image_url,user:tweet.user.name};
+//              commentList.set(tweet.user.id,[]);
+//              that.setState({postList:[post].concat(that.state.postList)});
+//          }
+// });
 
 }
 
@@ -114,7 +115,7 @@ loadDataFromSever(){
   }
 
   handleComment(comment,key) {
-     console.log("comment :"+comment);
+     console.log("commentKey :"+key);
      var comments =  commentList.get(key);
      console.log("commentsLength"+comments.length);
      var newComment ={id:Date.now,postId:key,cdata:comment};
@@ -167,12 +168,13 @@ loadDataFromSever(){
     //console.log("First");
     var submitComment = this.handleComment.bind(this);
     var deletePost    = this.handleDeletePost.bind(this);
-    var createPost = this.state.postList.map(function(postData, index) {
 
-         console.log('postId: ' +postData._id) ;
+    var createPost = this.state.postList.map(function(postData,key) {
+
+         console.log('postId======',postData._id) ;
          var comments  =commentList.get(postData._id)
         // console.log("inside "+commentList.get(1));
-       return (<Post postData={postData} comments ={comments} id={index++} submitComment={submitComment} deletePost={deletePost}/>);
+       return (<Post postData={postData} comments ={comments} key={key} submitComment={submitComment} deletePost={deletePost}/>);
     });
     return (
       <div>

@@ -47,7 +47,7 @@ exports = module.exports = function(options) {
    });
    this.add('role:timelineservice,cmd:deletePostByID',function(msg,respond){
        return posts.findByIdAndRemove({_id:msg.postId},function(err,deletedPost){
-         if(err){return responsd(err)}
+         if(err){return respond(err)}
         // console.log(deletedPost);
          return respond(null,{response:'success',deletedPost:deletedPost})
        })
