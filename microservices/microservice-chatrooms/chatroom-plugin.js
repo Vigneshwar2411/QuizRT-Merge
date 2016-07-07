@@ -36,7 +36,7 @@ exports = module.exports = function(options) {
 
     return Friend.aggregate([
           { $match:
-            {relation:"Friends",subject:msg.uid}
+            {relation:"friends",subject:msg.uid}
           },
           {$group:
             {_id:"$subject"}
@@ -68,7 +68,7 @@ exports = module.exports = function(options) {
   this.add('role:chat,cmd:getGroupList',function(msg,respond){
       return Friend.aggregate([
           { $match:
-            {relation:"Members are",object:msg.uid}
+            {relation:"members are",object:msg.uid}
           },
           {$unwind:"$subject"},
           { $group:
@@ -94,17 +94,36 @@ exports = module.exports = function(options) {
   });
 
   this.add('role:chat,cmd:getGroupMembers',function(msg,respond){
-    return Friends.aggregate([
+    return Friend.aggregate([
       { $match:
-          {relation:"members are",subject:"3456"}
-
+          {relation:"members are",subject:msg.gid}
+      },
+      { $group:
+          {_id: "$object"}
+      },
+      { $unwind:"$_id"},
+      { $group:
+        {_id:null,friends:{$addToSet:"$_id"}}
+      },
+      { $project:
+        {friends:1}
       }
-
     ],function(err,retrievedGroupsMembers){
-
+        if(err) {return respond(err);}
+        return UserProfile.aggregate([
+          // {$limit:2},
+          { $match:
+            {username:{$in:retrievedGroupsMembers[0].friends}}
+          }
+        ],function(err,getGroupMembersData){
+            if(err) {return respond(err); }
+            return respond(null, {response:'success',groupmembers:getGroupMembersData})
+        })
+        // return respond(null,{response:'success',groupmembers:retrievedGroupsMembers})
     });
   });
-  db.friends.aggregate([{ $match:{relation:"Members are",subject:"1160"}},{$group:{_id:"$object"}},{$unwind:"$_id"},{$group:{_id:null,friends:{$addToSet:"$_id"}}},{$project:{friends:1}}])
+  // db.friends.aggregate([{ $match:{relation:"Members are",subject:"1160"}},{$group:{_id:"$object"}},{$unwind:"$_id"},
+  // {$group:{_id:null,friends:{$addToSet:"$_id"}}},{$project:{friends:1}}])
 
 
   this.add('role:chat,cmd:leavegroup',function(msg,respond){
@@ -129,7 +148,7 @@ exports = module.exports = function(options) {
 
   this.add('role:chat,cmd:joinprivateroom',function(msg,respond){
     return Friend.find(
-      {subject:{$all:msg.ids},"relation":"Friends"},function(err,retrievedRoomId){
+      {subject:{$all:msg.ids},"relation":"friends"},function(err,retrievedRoomId){
         if(err) {return respond(err); }
         return respond(null,{response:'success',roomId:retrievedRoomId})
     });
@@ -139,7 +158,7 @@ exports = module.exports = function(options) {
 
   this.add('role:chat,cmd:joingroup',function(msg,respond){
     return Groups.find(
-      {subject:{$all:msg.groupname},"relation":"Friends"},function(err,retrievedRoomId){
+      {subject:{$all:msg.groupname},"relation":"friends"},function(err,retrievedRoomId){
         if(err) {return respond(err); }
         return respond(null,{response:'success',roomId:retrievedRoomId})
     });

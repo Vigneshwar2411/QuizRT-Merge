@@ -24,7 +24,7 @@
     it('Setup Account Microservice', function(done) {
       this.timeout(5000);
       accountMicroservice.use('.', {
-        mongoUrl: 'mongodb://localhost:27017/chatroom-test'
+        mongoUrl: 'mongodb://localhost:27017/boilerplate-production'
       });
 
       accountMicroservice.use('mesh', {auto:true, pin: 'role:chat,cmd:*'});
@@ -54,10 +54,10 @@
 
 
   var groupData ={
-      groupname:"QuizzRTSocial8",
+      groupname:"QuizRTSocialTest1",
       groupavatar:"http://lorempixel.com/100/100",
       topicid:Math.ceil(Math.random()*1231),
-      members:["Vigneshwar","Sandeep","Preethi"]
+      members:["vigneshwar1@gmail.com","sandeep1@gmail.com","deepak1@gmail.com"]
   };
 
   describe('Create Group', function() {
@@ -88,7 +88,7 @@
   describe('Retrieve Friends', function() {
     it('Retrieve Friends', function(done) {
       this.timeout(5000);
-      consumerMicroservice.act('role:chat,cmd:getFriendList', {uid:"Vigneshwar"}, function(err, response) {
+      consumerMicroservice.act('role:chat,cmd:getFriendList', {uid:"vigneshwar1@gmail.com"}, function(err, response) {
         if(err) { return done(err); }
         response.should.have.property('response');
         response.response.should.be.exactly('success');
@@ -101,7 +101,7 @@
   describe('Retrieve Groups', function() {
     it('Retrieve Groups', function(done) {
       this.timeout(5000);
-      consumerMicroservice.act('role:chat,cmd:getGroupList', {uid: "Vigneshwar"}, function(err, response) {
+      consumerMicroservice.act('role:chat,cmd:getGroupList', {uid: "vigneshwar1@gmail.com"}, function(err, response) {
         if(err) { return done(err); }
         response.should.have.property('response');
         response.response.should.be.exactly('success');
@@ -113,7 +113,23 @@
     });
   });
 
-  var ids =  ["Vigneshwar","Sandeep"];
+
+  describe('Retrieve Group Members', function() {
+    it('Retrieve Group Members', function(done) {
+      this.timeout(5000);
+      consumerMicroservice.act('role:chat,cmd:getGroupMembers', {gid: "3458"}, function(err, response) {
+        if(err) { return done(err); }
+        response.should.have.property('response');
+        response.response.should.be.exactly('success');
+        console.log("Retrieved Group Members List ",response.groupmembers);
+        // console.log("Retrieved Group ids",response.groups[0].groups);
+        // console.log("Retrieved Groups ids",response.groups);
+        done();
+      });
+    });
+  });
+
+  var ids =  ["vigneshwar1@gmail.com","sandeep1@gmail.com"];
   describe('Retrieve Private RoomID', function() {
     it('Retrieve Private RoomID', function(done) {
       this.timeout(5000);
@@ -129,8 +145,8 @@
   });
 
   var data = {
-    gid: '417',
-    userid: 'Sandeep'
+    gid: '3457',
+    userid: 'sandeep1@gmail.com'
   };
   describe('Leave Group', function() {
     it('Leave a Group', function(done) {

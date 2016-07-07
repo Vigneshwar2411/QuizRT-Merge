@@ -47,5 +47,16 @@ controller.addgroup = function(req, res) {
   });
 };
 
+    controller.getgroupmembers = function(req, res) {
+      var gid = req.param("gid");
+      console.log("======group id passed to server to get group members "+gid);
+      mesh.act('role:chat,cmd:getGroupMembers', {gid:req.param("gid")}, function(err, response) {
+        if(err) { console.log('===== ERR: ', err, ' ====='); return res.status(500).send(); }
+        if(response.response !== 'success') { return res.status(403).send(); }
+        console.log("==========Inside controller to retrieve groups====== ",response.groupmembers);
+        return res.status(201).json({data:response.groupmembers});
+      });
+    };
+
 
 exports = module.exports = controller;

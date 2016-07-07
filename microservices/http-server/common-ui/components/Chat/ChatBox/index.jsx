@@ -54,7 +54,15 @@ export default class ChatBox extends React.Component{
       })
     }
 
-  }
+    this.props.UserData.map(function(data){
+      if(this.props.Name==data.name){
+        this.setState({
+          friendid: data.username
+        })
+      }
+    })
+
+  };
 
   popoverOpen(event) {
     event.preventDefault();
@@ -210,8 +218,8 @@ export default class ChatBox extends React.Component{
         <Divider />
         <div >
           {this.state.view==="chatbox" ?
-              <ChatBoxAll friendid={this.props.Name} userid={this.state.userid} socket={this.state.socket}/> :
-              this.state.view==="groupinfo" ? <GroupInfo GroupData={this.state.GroupData} UserData={this.state.UserData}/> : null
+              <ChatBoxAll friendid={this.state.friendid} userid={this.state.userid} socket={this.state.socket}/> :
+              this.state.view==="groupinfo" ? <GroupInfo GroupData={this.state.GroupData}/> : null
           }
 
         </div>

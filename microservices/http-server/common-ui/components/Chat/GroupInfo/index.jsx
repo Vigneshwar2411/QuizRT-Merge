@@ -25,21 +25,34 @@ componentDidMount(){
   var outerThis=this;
   console.log(typeof(this.props.GroupData));
   console.log(this.props.GroupData);
-  console.log(this.props.UserData);
-  var temp =[];
-  this.props.GroupData.map(function(u){
-    outerThis.props.UserData.map(function(d){
-      if(u===d.username){
-        console.log(d.username);
-        console.log(d.useravatar);
-        temp= temp.concat({name:d.username , img:d.useravatar})
-      }
-    })
-  })
-  console.log(temp);
-  this.setState({
-    userInfo : temp
-  })
+  // console.log(this.props.UserData);
+
+  $.ajax({
+    url: restUrl + '/api/v1/groupslist/getgroupmembers/'+this.props.GroupData.topicid,
+    type: 'GET',
+    contentType: 'application/json',
+    cache: false,
+    success : function(data){
+      console.log("=====inside Group info success method");
+      console.log("====Inside Group info retrieved group members ",data.data);
+      console.log("====Inside client groups",data.data[0]);
+      this.setState({userInfo: data.data});
+    }.bind(this)
+  });
+  // var temp =[];
+  // this.props.GroupData.map(function(u){
+  //   outerThis.props.UserData.map(function(d){
+  //     if(u===d.username){
+  //       console.log(d.username);
+  //       console.log(d.useravatar);
+  //       temp= temp.concat({name:d.username , img:d.useravatar})
+  //     }
+  //   })
+  // })
+  // console.log(temp);
+  // this.setState({
+  //   userInfo : temp
+  // })
 }
 
 render(){
@@ -54,7 +67,7 @@ render(){
                   return(
                     <ListItem
                       primaryText={u.name}
-                      leftAvatar={<Avatar src={u.img} />}
+                      leftAvatar={<Avatar src={u.useravatar} />}
                       rightIcon={<FontIcon className="muidocs-icon-social-person"/>}
                       />
                   )

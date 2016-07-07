@@ -40,10 +40,10 @@ export default class FriendGroupList extends React.Component{
               <Subheader>Friends</Subheader>
                 {this.props.usersData.map(function(data){
                   return(  <ListItem id = {data._id}
-                    primaryText={data.username}
+                    primaryText={data.name}
                     leftAvatar={<Avatar src={data.useravatar} />}
                     rightIcon={<FontIcon className="muidocs-icon-communication-chat_bubble" />}
-                    onTouchTap={outerThis.props.selectList.bind(outerThis,data.username)}
+                    onTouchTap={outerThis.props.selectList.bind(outerThis,data.name)}
                     />);
                 })}
                 </List>

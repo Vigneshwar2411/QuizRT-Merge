@@ -12,20 +12,8 @@ var UserProfileSchema = new Schema({
   totalGames :{ type: Number},
   liketopics: { type: [String]},
   following: {type : Number},
-  followers: {type: Number}
+  followers: {type: Number},
+  category: {type: String}
 });
 
 exports = module.exports = mongoose.model('UserProfile', UserProfileSchema);
-
-
-vigneshwar1@gmail.com
-sandeep1@hotmail.com
-preethi1@yahoo.co.in
-ram1@gmail.com
-deepak1@gmail.com
-sandeepns1a@gmail.com
-tapash1@gmail.com
-parag2@gmail.com
-chanda1@gmail.com
-navjot1@yahoo.com
-srikant1@gmail.com

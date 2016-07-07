@@ -36,7 +36,7 @@ export default class OnlineList extends React.Component{
 
       // var url ="http://localhost:8080/groups?users_like="+this.state.username;
       var username = (JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub);
-      username = username.split("@")[0];
+      // username = username.split("@")[0];
       console.log("==========Inside did mount of OnlineList before first ajax=====");
       // var request = $.ajax({
       //   url: restUrl + '/api/v1/chatlist/users/'+"Vigneshwar",
@@ -55,7 +55,7 @@ export default class OnlineList extends React.Component{
       // }.bind(this));
 
       $.ajax({
-        url: restUrl + '/api/v1/friendslist/'+"Vigneshwar",
+        url: restUrl + '/api/v1/friendslist/'+username,
         type: 'GET',
         contentType: 'application/json',
         cache: false,
@@ -105,7 +105,7 @@ export default class OnlineList extends React.Component{
     loadgrouplistfromserver(){
       console.log("===Inside Online List,inside Load GroupListFromServer===");
       $.ajax({
-        url: restUrl + '/api/v1/groupslist/'+"Vigneshwar",
+        url: restUrl + '/api/v1/groupslist/'+username,
         type: 'GET',
         contentType: 'application/json',
         cache: false,
