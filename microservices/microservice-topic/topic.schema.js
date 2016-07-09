@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ProfileSchema = new Schema({
+var TopicSchema = new Schema({
   _id: { type: String, required: true, unique: true, index: true },
-  topicName :{ type: String},
-  imageLink :{ type: String},
-  age :{ type: Number},
-  country :{ type: String},
-  totalGames :{ type: Number}
+  topicName:{ type: String},
+  topicIcon:{ type: String},
+  topicDescription:{ type: String},
+  topicFollowers:{ type: Number},
+  playersPerMatch:{ type: Number},
+  topicCategory:{ type: String}
 });
 
-exports = module.exports = mongoose.model('Profile', ProfileSchema);
+exports = module.exports = mongoose.model('topics_collection', TopicSchema,'topics_collection');

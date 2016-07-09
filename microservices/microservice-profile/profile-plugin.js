@@ -27,19 +27,19 @@ exports = module.exports = function(options) {
     return bcrypt.compare(password, hash, callback);
   }
 
-  const Profile = connection.model('Profile', require('./profile.schema'));
+  const UserProfile = connection.model('UserProfile', require('./profile.schema'));
 
 
 
   this.add('role:profile,cmd:create', function(msg, respond) {
-    return Profile.create(msg, function(err, createdProfile) {
+    return UserProfile.create(msg, function(err, createdProfile) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', entity: createdProfile});
     });
   });
 
   this.add('role:profile,cmd:retrieveById', function(msg, respond) {
-    return Profile.findById(msg.id, function (err, retrievedProfile) {
+    return UserProfile.findById(msg.id, function (err, retrievedProfile) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', entity: retrievedProfile});
     });
@@ -47,14 +47,14 @@ exports = module.exports = function(options) {
 
   this.add('role:profile,cmd:getProfile', function(msg, respond) {
     console.log("=============Inside plugin getProfile list msg==== ",msg);
-    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
+    return UserProfile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', profile: retrievedProfile});
     });
   });
 
   this.add('role:profile,cmd:editProfile', function(msg, respond) {
-    return Profile.find({username:msg.username}, function (err, retrievedProfile) {
+    return UserProfile.find({username:msg.username}, function (err, retrievedProfile) {
       if(err) { return respond(err); }
       else{
         retrievedProfile[0].name= msg.name;
@@ -70,7 +70,7 @@ exports = module.exports = function(options) {
   });
 
   this.add('role:profile,cmd:dangerouslyDeleteAllProfile', function(msg, respond) {
-    return Profile.remove({}, function(err) {
+    return UserProfile.remove({}, function(err) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success'});
     });

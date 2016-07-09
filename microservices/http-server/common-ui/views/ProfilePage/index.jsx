@@ -3,6 +3,7 @@ import Profile from '../../components/Profile';
 import MediaQuery from 'react-responsive';
 import MainAppBar from '../../components/MainAppBar';
 import ChatDrawer from '../../components/Chat/ChatDrawer';
+import TabsMobile from '../../components/Tabs';
 
 export default class HomePage extends React.Component {
   constructor() {
@@ -26,7 +27,7 @@ export default class HomePage extends React.Component {
                 <MainAppBar/>
                 <MediaQuery query='(max-device-width: 800px)'>
                   <MediaQuery query='(max-width: 800px)'>
-
+                    <TabsMobile page="Profile"/>
                   </MediaQuery>
                 </MediaQuery>
 
@@ -39,7 +40,7 @@ export default class HomePage extends React.Component {
                             <div className="col-md-12 col-sm-12 col-xs-12 col-lg-12" style={bodyContainer}>
                               <div className="row">
                                   <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 col-lg-offset-1" >
-                                    <Profile/>
+                                      <Profile username={this.props.params.username}/>
                                   </div>
                                   <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
 

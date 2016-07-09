@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar';
 // import TabsMobile from '../../components/Tabs';
 import MediaQuery from 'react-responsive';
 import ChatDrawer from '../../components/Chat/ChatDrawer';
+import TabsMobile from '../../components/Tabs';
 
 export default class DashboardView extends React.Component {
 
@@ -25,7 +26,7 @@ export default class DashboardView extends React.Component {
                 <MainAppBar/>
                 <MediaQuery query='(max-device-width: 800px)'>
                   <MediaQuery query='(max-width: 800px)'>
-
+                  <TabsMobile page="Home"/>
                   </MediaQuery>
                 </MediaQuery>
 

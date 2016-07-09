@@ -75,7 +75,7 @@ export default class Profile extends React.Component{
   };
 
   handleImg(event) {
-    this.setState({imageLink: event.target.value});
+    this.setState({useravatar: event.target.value});
   };
 
   handleAge(event) {
@@ -99,7 +99,7 @@ export default class Profile extends React.Component{
         var profileData = {
           username: this.state.username,
           name: this.state.name,
-          imageLink: this.state.imageLink,
+          imageLink: this.state.useravatar,
           age: this.state.age,
           country: this.state.country
         };
@@ -157,7 +157,7 @@ export default class Profile extends React.Component{
               }
 
   componentDidMount(){
-    console.log(this.state.Profile.username.value);
+    console.log(this.props.username);
 
     var request = $.ajax({
     url: restUrl + '/api/v1/profile/'+this.state.Profile.username.value,
@@ -198,15 +198,16 @@ export default class Profile extends React.Component{
       <Card>
           <div className="row">
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-              <div style={{width: '100%', textAlign: 'center'}}>
-                <Avatar size={80} style={{margin: '30px 0 30px'}}
-                 src={this.state.arr.imageLink}
+              <div style={{textAlign: 'center'}}>
+                <Avatar size={70} style={{margin: '30px 0 30px'}}
+                 src={this.state.arr.useravatar}
                />
               </div>
             </div>
-            <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
-              <h2>{this.state.arr[0].name}</h2>
-              <h5>{this.state.arr[0].age},{this.state.arr[0].country}</h5>
+            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" >
+              <h2>{this.state.arr.name}</h2>
+              <h5>{this.state.arr.category}</h5>
+              <h5>{this.state.arr.age},{this.state.arr.country}</h5>
             </div>
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" >
               {
@@ -285,7 +286,7 @@ export default class Profile extends React.Component{
         <br/>
         <CardMedia>
           <div className="row">
-            <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7" style={styles} >
+            <div className="col-xs-5 col-sm-5 col-md-5 col-lg-7" style={styles} >
               <h2>Create your Own Tournament</h2>
               <RaisedButton label="Start Here" secondary={true}/>
             </div>
@@ -332,7 +333,7 @@ export default class Profile extends React.Component{
 
         <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-lg-offset-1" style={styles}>
         <h4>Games</h4>
-        <h2>{this.state.arr[0].totalGames}</h2>
+        <h2>{this.state.arr.totalGames}</h2>
         </div>
         <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4" style={style}>
         <h4>Followers</h4>

@@ -20,6 +20,8 @@ import Drawer from 'material-ui/Drawer';
 import Avatar from 'material-ui/Avatar';
 import Badge from 'material-ui/Badge';
 import {List, ListItem} from 'material-ui/List';
+import RaisedButton from 'material-ui/RaisedButton';
+import base64 from 'base-64';
 
 import ActionAccountbox from 'material-ui/svg-icons/action/account-box';
 import ActionTurnedin from 'material-ui/svg-icons/action/turned-in';
@@ -35,7 +37,10 @@ export default class MainAppBar extends React.Component {
     this.state = {dropDown: false, open: false,appbarContainer: {
     	position: 'fixed',
     	width: '100%',
-    	zIndex: 1
+    	zIndex: 1,
+      Profile: {
+        username: { value: JSON.parse(base64.decode(localStorage.token.split('.')[1])).sub},
+      }
     }};
   }
 
@@ -81,6 +86,11 @@ export default class MainAppBar extends React.Component {
 
   handleDrawerOpen() {
     this.setState({open: true});
+  }
+
+  handleClick(e){
+    e.preventDefault();
+    this.context.router.push('/profilePage/deepak1@gmail.com');
   }
 
   render() {

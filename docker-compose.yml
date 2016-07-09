@@ -60,6 +60,17 @@ services:
       environment:
         MONGO_URL: 'mongodb://localhost:27017/boilerplate-production'
 
+  microservice-topic:
+      container_name: microservice-topic
+      build: microservices/microservice-topic
+      image: boilerplate/topic
+      network_mode: host
+      restart: always
+      depends_on:
+        - microservice-mesh-base
+      environment:
+        MONGO_URL: 'mongodb://localhost:27017/quizRT4'
+
   microservice-tournament-section:
     container_name: microservice-tournament-section
     build: microservices/tournamentSection

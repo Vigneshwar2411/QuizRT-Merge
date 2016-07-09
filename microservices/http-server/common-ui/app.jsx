@@ -56,10 +56,10 @@ ReactDOM.render(
       <Route path="/login" component={LoginView} onEnter={handleLoginEnter} />
       <Route path="/" component={DashboardView} onEnter={verifyLogin} />
       <Route path="/SignUP" component={SignUP}/>
-      <Route path="/profilePage" component={ProfilePage}/>
+      <Route path="/ProfilePage" component={ProfilePage}/>
       <Route path="/topics" component={Topics} onEnter={verifyLogin} />
       <Route path="/tournaments" component={Tournaments} onEnter={verifyLogin} />
-      <Route path="/eachTopic" component={EachTopicsPage} onEnter={verifyLogin} />
+      <Route path="/eachTopic/:id" component={EachTopicsPage} onEnter={verifyLogin} />
       <Route path="/quiz" component={Quiz} />
       <Route path="my-account/change-password" component={ChangePasswordView} onEnter={verifyLogin} />
     </Router>

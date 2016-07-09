@@ -1,11 +1,11 @@
 {
-  "name": "profile-microservice",
+  "name": "topic-microservice",
   "version": "0.1.0",
-  "description": "Profile entity",
-  "main": "profile-plugin.js",
+  "description": "Topic entity",
+  "main": "topic-plugin.js",
   "scripts": {
-    "start": "node profile-microservice.js",
-    "test": "grunt test"
+    "start": "node topic-microservice.js",
+    "test": "node_modules/grunt/bin/grunt test"
   },
   "keywords": [
     "authentication",
@@ -13,7 +13,8 @@
     "profile",
     "friend",
     "entity",
-    "mongodb"
+    "mongodb",
+    "topic"
   ],
   "author": "Sagar Patke <sagarpatke@gmail.com>",
   "license": "ISC",

@@ -3,16 +3,17 @@ var should = require('should');
 var seneca = require('seneca');
 
 const baseMicroservice = seneca();
-const profileMicroservice = seneca();
+const topicMicroservice = seneca();
 const consumerMicroservice = seneca();
 
-const profile = {
-  username:"SomeName",
-  name:"SomeName",
-  imageLink:"http://lorempixel.com/600/337/nature/",
-  age:"25",
-  country:"SomeCountry",
-  totalGames:"5",
+const topic = {
+  _id:"SomeName",
+  topicName:"SomeName",
+  topicIcon:"http://lorempixel.com/600/337/nature/",
+  topicDescription:"SomeDescription",
+  topicFollowers:23,
+  playersPerMatch:4,
+  topicCategory:"india",
   }
 
 describe('Setup', function() {
@@ -22,14 +23,14 @@ describe('Setup', function() {
     baseMicroservice.ready(done);
   });
 
-  it('Profile Microservice', function(done) {
-    profileMicroservice.use('.', {
-      mongoUrl: 'mongodb://localhost:27017/profile-test'
+  it('Topic Microservice', function(done) {
+    topicMicroservice.use('.', {
+      mongoUrl: 'mongodb://localhost:27017/topic-test'
     });
 
-    profileMicroservice.use('mesh', {auto:true, pin: 'role:profile,cmd:*'});
+    topicMicroservice.use('mesh', {auto:true, pin: 'role:topic,cmd:*'});
 
-    profileMicroservice.ready(done);
+    topicMicroservice.ready(done);
   });
 
   it('Consumer Microservice', function(done) {
@@ -38,40 +39,30 @@ describe('Setup', function() {
   });
 });
 
-describe('Before', function() {
-  it('Clear profile collection', function(done) {
-    consumerMicroservice.act('role:profile,cmd:dangerouslyDeleteAllProfiles', function(err, response) {
-      if(err) { return done(err); }
-      response.should.have.property('response');
-      response.response.should.be.exactly('success');
-      done();
-    });
-  });
-});
-var createdProfileId;
 
-describe('Profile Microservice API', function() {
+
+describe('Topic Microservice API', function() {
   this.timeout(5000)
-  it('Retrieve profile by username', function(done) {
-    consumerMicroservice.act('role:tournaments,cmd:getProfile',{username:"SomeName"},function(err, response) {
+  it('Retrieve Topic by id', function(done) {
+    consumerMicroservice.act('role:topic,cmd:getTopic',{_id:"SomeName"},function(err, response) {
       if(err) {return done(err);}
       response.should.have.property('response');
       response.response.should.be.exactly('success');
       response.should.have.property('entity');
       response.entity.should.have.property('_id');
       createdProfileId = response.entity._id;
-      response.entity.should.have.property('username');
-      response.entity.username.should.be.exactly(profile.username);
-      response.entity.should.have.property('name');
-      response.entity.name.should.be.exactly(profile.name);
-      response.entity.should.have.property('imageLink');
-      response.entity.imageLink.should.be.exactly(profile.imageLink);
-      response.entity.should.have.property('age');
-      response.entity.age.should.be.exactly(profile.age);
-      response.entity.should.have.property('country');
-      response.entity.country.should.be.exactly(profile.country);
-      response.entity.should.have.property('totalGames');
-      response.entity.totalGames.should.be.exactly(profile.totalGames);
+      response.entity.should.have.property('topicName');
+      response.entity.topicName.should.be.exactly(topic.topicName);
+      response.entity.should.have.property('topicIcon');
+      response.entity.topicIcon.should.be.exactly(topic.topicIcon);
+      response.entity.should.have.property('topicDescription');
+      response.entity.topicDescription.should.be.exactly(topic.topicDescription);
+      response.entity.should.have.property('topicFollowers');
+      response.entity.topicFollowers.should.be.exactly(topic.topicFollowers);
+      response.entity.should.have.property('playersPerMatch');
+      response.entity.playersPerMatch.should.be.exactly(topic.playersPerMatch);
+      response.entity.should.have.property('topicCategory');
+      response.entity.topicCategory.should.be.exactly(topic.topicCategory);
       done();
     })
   });
@@ -125,8 +116,8 @@ describe('Teardown', function() {
     consumerMicroservice.close(done);
   });
 
-  it('profileMicroservice', function(done) {
-    profileMicroservice.close(done);
+  it('topicMicroservice', function(done) {
+    topicMicroservice.close(done);
   });
 
   it('baseMicroservice', function(done) {

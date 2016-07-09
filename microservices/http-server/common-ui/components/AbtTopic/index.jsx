@@ -7,6 +7,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import {grey600,grey500, grey100, red900, teal500} from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
+import restUrl from '../../restUrl'
 
 const TitleStyle={
   fontSize:"1em",
@@ -101,18 +102,14 @@ const iconStyles = {
 
     componentDidMount(){
 
-      var data1 = {
-        topicId: cookie.load('topicId')
-      };
 
-      console.log(data1);
+
+      console.log("Topic Id in profile component:",this.props.id);
 
 
       var request = $.ajax({
-      url: restUrl + '/api/v1/topic',
+      url: restUrl + '/api/v1/topic/'+this.props.id,
       type: 'GET',
-      data:JSON.stringify(data1),
-      headers: {JWT: localStorage.token}
       });
       request.done(function(data) {
       console.log(JSON.stringify(data));
@@ -142,10 +139,8 @@ const iconStyles = {
             </CardMedia>
             <CardActions className="row">
               <div className="col-md-3 col-xs-3 col-lg-3 col-sm-3">
-                <RaisedButton label="Play" secondary={true} style={BtnStyle} onClick={this.handleClike.bind(this,this.state.arr._id)} />
               </div>
               <div className="col-md-3 col-xs-3 col-lg-3 col-sm-3">
-                <RaisedButton label="Follow" secondary={true} style={BtnStyle} onClick={this.handleFollow.bind(this,this.state.arr._id)} />
               </div>
               <div className="col-md-8 col-xs-8 col-lg-8 col-sm-8">
 

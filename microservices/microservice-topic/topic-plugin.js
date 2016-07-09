@@ -31,16 +31,16 @@ exports = module.exports = function(options) {
 
 
 
-  this.add('role:topic,cmd:retrieveById', function(msg, respond) {
+  this.add('role:topic,cmd:getTopic', function(msg, respond) {
     return Topic.findById(msg.id, function (err, retrievedTopic) {
       if(err) { return respond(err); }
-      return respond(null, {response: 'success', entity: retrievedTopic});
+      return respond(null, {response: 'success', topic: retrievedTopic});
     });
   });
 
 
-  this.add('role:profile,cmd:dangerouslyDeleteAllProfile', function(msg, respond) {
-    return Profile.remove({}, function(err) {
+  this.add('role:topic,cmd:dangerouslyDeleteAllTopic', function(msg, respond) {
+    return Topic.remove({}, function(err) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success'});
     });
