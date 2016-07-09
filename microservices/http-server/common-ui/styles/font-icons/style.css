@@ -64,9 +64,22 @@
 .muidocs-icon-action-power_settings_new:after {
     content: "power_settings_new";
 }
-.muidocs-icon-action-people_outline:after {
+.muidocs-icon-social-people_outline:after {
     content: "people_outline";
 }
+
+.muidocs-icon-social-people:after {
+    content: "people";
+}
+
+.muidocs-icon-action-favorite:after {
+    content: "favorite";
+}
+
+.muidocs-icon-action-favorite_border:after {
+    content: "favorite_border";
+}
+
 .muidocs-icon-action-exit_to_app:after {
     content: "exit_to_app";
 }

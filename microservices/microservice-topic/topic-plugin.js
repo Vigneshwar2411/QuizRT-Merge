@@ -32,7 +32,7 @@ exports = module.exports = function(options) {
 
 
   this.add('role:topic,cmd:getTopic', function(msg, respond) {
-    return Topic.findById(msg.id, function (err, retrievedTopic) {
+    return Topic.find({_id:msg.id}, function (err, retrievedTopic) {
       if(err) { return respond(err); }
       return respond(null, {response: 'success', topic: retrievedTopic});
     });

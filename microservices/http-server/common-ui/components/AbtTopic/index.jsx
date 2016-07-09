@@ -8,6 +8,9 @@ import SwipeableViews from 'react-swipeable-views';
 import {grey600,grey500, grey100, red900, teal500} from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 import restUrl from '../../restUrl'
+import FontIcon from 'material-ui/FontIcon';
+import Checkbox from 'material-ui/Checkbox';
+
 
 const TitleStyle={
   fontSize:"1em",
@@ -29,7 +32,7 @@ var imgStyle={
 }
 
 const BtnStyle ={
-  marginLeft:'35%'
+  marginLeft:'40%'
 }
 
 var style1= {
@@ -64,25 +67,26 @@ var title4={
 
 const style_fav={
     width:'5%',
-    marginTop:10,
-    marginBottom:10,
     float:'right',
+    marginTop:20
 }
 const style_followers={
     width:'12%',
-    marginTop:15,
-    marginBottom:10,
     float:'right',
     fontWeight:'bold',
-    fontSize:'small'
+    fontSize:'small',
+    cursor:'pointer',
+    marginTop:20
+
 }
 const style_favorite={
     width:'10%',
-    marginTop:15,
-    marginBottom:10,
     float:'right',
     fontWeight:'bold',
-    fontSize:'small'
+    fontSize:'small',
+    cursor:'pointer',
+    marginTop:20
+
 }
 const iconStyles = {
   marginRight: 24,
@@ -90,6 +94,11 @@ const iconStyles = {
   width:60,
 }
 
+const style_players={
+  marginRight:20,
+  float:'right',
+  color:'white',
+  }
 
   export default class AbtTopic extends React.Component {
     constructor(){
@@ -99,10 +108,15 @@ const iconStyles = {
       }
     };
 
+    handleClike(tId){
+      Cookie.save("topicId",tId);
+      console.log('function called handleClike');
+      this.context.router.push({
+        pathname:'/quiz'
+      })
+    }
 
     componentDidMount(){
-
-
 
       console.log("Topic Id in profile component:",this.props.id);
 
@@ -124,32 +138,41 @@ const iconStyles = {
       return(
         <div>
         <Card>
-            <div className="row">
-            <h4 style={title1}>
-              {this.state.arr.topicName}
-            </h4>
-            <h5 style={title2} color={grey500}>{this.state.arr.topicDescription}</h5>
 
-            <CardMedia overlay={
-              <div>
-              <CardTitle subtitle="Don't limit your Challenges, Challenge your Limits." subtitleColor="white" />
-              </div>
-             }>
-              <img src={this.state.arr.topicIcon} />
-            </CardMedia>
-            <CardActions className="row">
-              <div className="col-md-3 col-xs-3 col-lg-3 col-sm-3">
-              </div>
-              <div className="col-md-3 col-xs-3 col-lg-3 col-sm-3">
-              </div>
-              <div className="col-md-8 col-xs-8 col-lg-8 col-sm-8">
+          <p style={style_followers}>{this.state.arr[0].topicFollowers} </p>
 
-              </div>
-             </CardActions>
-              <Divider />
-          </div>
+          <Checkbox
+            checkedIcon={<FontIcon className="muidocs-icon-social-people" style={{color:'black'}}/>}
+            uncheckedIcon={<FontIcon className="muidocs-icon-social-people_outline" style={{color:'black'}}/>}
+            style={style_followers}
+            iconStyle={{fill: '#009688'}}
+            />
 
-          <Divider/>
+            <Checkbox
+              checkedIcon={<FontIcon className="muidocs-icon-action-favorite" style={{color:'black'}}/>}
+              uncheckedIcon={<FontIcon className="muidocs-icon-action-favorite_border" style={{color:'black'}}/>}
+              style={style_favorite}
+              iconStyle={{fill: '#B71C1C'}}
+            />
+
+            <CardHeader
+                title={this.state.arr[0].topicName}
+                subtitle={this.state.arr[0].topicDescription}
+              />
+
+              <CardMedia
+              overlay={
+                <div>
+                <p style={style_players}>{this.state.arr[0].playersPerMatch} players Per Match</p>
+                <CardTitle subtitle={this.state.arr[0].topicCategory} subtitleColor="white" />
+                </div>
+               }
+              >
+                <img src={this.state.arr[0].topicIcon} />
+              </CardMedia>
+              <CardActions className="row">
+                  <RaisedButton label="Play" secondary={true} style={BtnStyle} onClick={this.handleClike.bind(this,this.props.id)} />
+               </CardActions>
         </Card>
         </div>
       );
